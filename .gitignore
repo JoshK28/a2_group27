@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual environments (the brief says no venv in the submission)
+venv/
+.venv/
+env/
+
+# Local database: each person builds it with the seed script.
+# (The submission zip still needs the db inside the package; add it at zip time.)
+instance/
+*.sqlite
+*.sqlite3
+*.db
+
+# Secrets: Hugging Face token, secret keys
+.env
+*.env
+
+# Local AI model cache
+.cache/
+models_cache/
+
+# Submission paperwork is kept outside git
+*.docx
+~$*
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
