@@ -15,7 +15,8 @@ class User(db.Model, UserMixin):
     surname = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(120), unique=True, index=True, nullable=False)
     password_hash = db.Column(db.String(255), nullable=False)
-    phone_number = db.Column(db.String(20), nullable=True)
+    phone_number = db.Column(db.String(20), nullable=False)
+    street_address = db.Column(db.String(200), nullable=False)
 
     events = db.relationship('Event', backref='owner')
     comments = db.relationship('Comment', backref='user')
@@ -26,9 +27,9 @@ class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text, nullable=False)
-    date = db.Column(db.DateTime, nullable=False)
-    start = db.Column(db.Time, nullable=False)
-    end = db.Column(db.Time, nullable=False)
+    image = db.Column(db.String(255), nullable=False)
+    start = db.Column(db.DateTime, nullable=False)
+    end = db.Column(db.DateTime, nullable=False)
 
     location = db.Column(db.String(200), nullable=False)
     city = db.Column(db.String(100), nullable=False)
@@ -40,7 +41,7 @@ class Event(db.Model):
     tickets_remaining = db.Column(db.Integer, nullable=False)
     status = db.Column(db.String(20), nullable=False, default='Open', index=True)
     aoc_mode = db.Column(db.String(20), nullable=False, default='none')
-    timestamp = db.Column(db.DateTime, default=datetime.now)
+    aoc_text = db.Column(db.Text)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
     comments = db.relationship('Comment', backref='event')
@@ -59,6 +60,7 @@ class Order(db.Model):
     __tablename__ = 'orders'
     id = db.Column(db.Integer, primary_key=True)
     quantity = db.Column(db.Integer, nullable=False)
+    price = db.Column(db.Float, nullable=False)
     book_time = db.Column(db.DateTime, default=datetime.now)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     event_id = db.Column(db.Integer, db.ForeignKey('events.id'), nullable=False)

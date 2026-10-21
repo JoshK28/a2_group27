@@ -11,6 +11,7 @@ env/
 # (The submission zip still needs the db inside the package; add it at zip time.)
 instance/
 *.sqlite
+*.sqlite-journal
 *.sqlite3
 *.db
 
