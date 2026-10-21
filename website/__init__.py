@@ -3,6 +3,7 @@ from flask import Flask
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+import os
 
 db = SQLAlchemy()
 
@@ -15,7 +16,8 @@ def create_app():
     app.debug = True
     app.secret_key = 'somesecretkey'
     # set the app configuration data 
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sitedata.sqlite'
+    db_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'sitedata.sqlite')
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+ db_path
     # initialise db with flask app
     db.init_app(app)
 
