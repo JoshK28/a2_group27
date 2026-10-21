@@ -2,7 +2,11 @@ from . import db
 from datetime import datetime
 from flask_login import UserMixin
 
-
+DIVISION = ['Open Competition','Youth Competition','Social']
+DISCIPLINE = ['Bouldering','Lead','Speed']
+GENDER = ['Male','Female']
+STATUS = ['Open','Inactive','Sold Out','Cancelled']
+AOC_MODE = ['none', 'generic','enhanced']
 
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
@@ -24,9 +28,18 @@ class Event(db.Model):
 
     location = db.Column(db.String(200), nullable=False)
     city = db.Column(db.String(100), nullable=False)
+    division = db.Column(db.String(50), nullable=False)
+    discipline = db.Column(db.String(50), nullable=False)
+    gender = db.Column(db.String(20), nullable=False)
+
+
     ticket_price = db.Column(db.Float, nullable=False)
     ticket_capacity = db.Column(db.Integer, nullable=False)
     tickets_remaining = db.Column(db.Integer, nullable=False)
+    status = db.Column(db.String(20), nullable=False, default='Open', index=True)
+    aoc_mode = db.Column(db.String(20), nullable=False, default='none')
+    timestamp = db.Column(db.DateTime, default=datetime.now)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
 class Comment(db.Model):
     __tablename__ = 'comments'
