@@ -17,6 +17,10 @@ class User(db.Model, UserMixin):
     password_hash = db.Column(db.String(255), nullable=False)
     phone_number = db.Column(db.String(20), nullable=True)
 
+    events = db.relationship('Event', backref='owner')
+    comments = db.relationship('Comment', backref='user')
+    orders = db.relationship('Order', backref='user')
+
 class Event(db.Model):
     __tablename__ = 'events'
     id = db.Column(db.Integer, primary_key=True)
@@ -31,8 +35,6 @@ class Event(db.Model):
     division = db.Column(db.String(50), nullable=False)
     discipline = db.Column(db.String(50), nullable=False)
     gender = db.Column(db.String(20), nullable=False)
-
-
     ticket_price = db.Column(db.Float, nullable=False)
     ticket_capacity = db.Column(db.Integer, nullable=False)
     tickets_remaining = db.Column(db.Integer, nullable=False)
@@ -40,6 +42,10 @@ class Event(db.Model):
     aoc_mode = db.Column(db.String(20), nullable=False, default='none')
     timestamp = db.Column(db.DateTime, default=datetime.now)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
+    comments = db.relationship('Comment', backref='event')
+    orders = db.relationship('Order', backref='event')
+
 
 class Comment(db.Model):
     __tablename__ = 'comments'
