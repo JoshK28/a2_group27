@@ -12,9 +12,25 @@ auth_bp = Blueprint('auth', __name__)
 def register():
     register_form = RegisterForm()
     if register_form.validate_on_submit():
-        # Process registration logic here
-        pass
-    return render_template('register.html', form=register_form)
+        email = register_form.email.data
+        user = db.session.scalar(db.select(User).where(User.email==email))
+        if user:
+            flash('Email address already exists')
+        else:
+            hashed_password = generate_password_hash(register_form.password.data).decode('utf-8')
+            new_user = User(
+                first_name=register_form.first_name.data,
+                surname=register_form.surname.data,
+                email=email,
+                password_hash=hashed_password,
+                phone_number=register_form.phone_number.data,
+                street_address=register_form.street_address.data
+            )
+            db.session.add(new_user)
+            db.session.commit()
+            flash('Registration successful! Please log in.')
+            return redirect(url_for('auth.login'))
+    return render_template('user.html', form=register_form, heading='Register')
 
 
 
