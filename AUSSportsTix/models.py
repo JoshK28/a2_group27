@@ -2,8 +2,7 @@ from . import db
 from datetime import datetime
 from flask_login import UserMixin
 
-DIVISION = ['Open Competition','Youth Competition','Social']
-DISCIPLINE = ['Bouldering','Lead','Speed']
+SPORT = ['Bouldering','Soccer','Tennis','Rugby','Cricket']
 GENDER = ['Male','Female']
 STATUS = ['Open','Inactive','Sold Out','Cancelled']
 AOC_MODE = ['none', 'generic','enhanced']
@@ -33,8 +32,7 @@ class Event(db.Model):
 
     location = db.Column(db.String(200), nullable=False)
     city = db.Column(db.String(100), nullable=False)
-    division = db.Column(db.String(50), nullable=False)
-    discipline = db.Column(db.String(50), nullable=False)
+    sport = db.Column(db.String(50), nullable=False)
     gender = db.Column(db.String(20), nullable=False)
     ticket_price = db.Column(db.Float, nullable=False)
     ticket_capacity = db.Column(db.Integer, nullable=False)
