@@ -1,11 +1,11 @@
-from AUSSportsTix import db, create_app, encoder
+from AUSSportsTix import db, create_app
 from AUSSportsTix.models import User, Event, Comment, Order
 from flask_bcrypt import generate_password_hash
 from datetime import datetime
 
 #SEED = False # this will create an empty database with no data
 SEED = True # this will also put sample data into the database
-image_path = "/static/image/"
+image_path = "/static/img/"
 password = "SportTicket123"
 
 # This function populates the database
@@ -15,7 +15,7 @@ def populate_database_with_sample_data():
             "first_name": "John",
             "surname": "Doe",
             "email": "john.doe@example.com",
-            "password": generate_password_hash(password),
+            "password_hash": generate_password_hash(password),
             "phone_number": "123-456-7890",
             "street_address": "123 Main St, Melbourne, VIC 3000"
         }
@@ -26,8 +26,8 @@ def populate_database_with_sample_data():
             "title": "Soccer Match",
             "description": "Exciting soccer match between local teams.",
             "image": "soccer.jpeg",
-            "start": datetime(2026, 6, 15, 19, 0),
-            "end": datetime(2026, 6, 15, 21, 0),
+            "start": datetime(2027, 6, 15, 19, 0),
+            "end": datetime(2027, 6, 15, 21, 0),
             "location": "Melbourne Stadium",
             "city": "Melbourne",
             "sport": "Soccer",
@@ -44,7 +44,7 @@ def populate_database_with_sample_data():
     comments = [
         {
             "content": "Great event!",
-            "timestamp": datetime(2026, 6, 15, 20, 0),
+            "timestamp": datetime(2027, 6, 15, 20, 0),
             "user_id": 1,
             "event_id": 1
         }
@@ -54,7 +54,8 @@ def populate_database_with_sample_data():
         {
             "user_id": 1, 
             "event_id": 1,
-            "quantity": 2
+            "quantity": 2,
+            "price": 25.0
         }
     ]
 
@@ -65,7 +66,7 @@ def populate_database_with_sample_data():
                     first_name=user["first_name"],
                     surname=user["surname"],
                     email=user["email"],
-                    password=user["password"],
+                    password_hash=user["password_hash"],
                     phone_number=user["phone_number"],
                     street_address=user["street_address"]
                 )
@@ -116,16 +117,15 @@ def populate_database_with_sample_data():
                 Order(
                     user_id=order["user_id"],
                     event_id=order["event_id"],
-                    quantity=order["quantity"]
+                    quantity=order["quantity"],
+                    price=order["price"]
                 )
             )
         db.session.commit()
         print("Orders added to database")
 
-        db.session.commit()
-        print("Database populated - did you copy the sample images into the package subfolder:",image_path,"?")
-    else:
-            print ("Aborted as destinations table is not empty")
+    print("Database populated - did you copy the sample images into the package subfolder:",image_path,"?")
+
   
 
 
