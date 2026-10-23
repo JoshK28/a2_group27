@@ -41,20 +41,27 @@ def login():
     login_form = LoginForm()
     error = None
     if login_form.validate_on_submit():
-        user_name = login_form.user_name.data
+        email = login_form.email.data
         password = login_form.password.data
-        user = db.session.scalar(db.select(User).where(User.name==user_name))
+        user = db.session.scalar(db.select(User).where(User.email==email))
         if user is None:
-            error = 'Incorrect user name'
+            error = 'Incorrect email address'
         elif not check_password_hash(user.password_hash, password): # takes the hash and cleartext password
             error = 'Incorrect password'
         if error is None:
             login_user(user)
+            flash(f'Login successful, {user.first_name}!', 'success')
             nextp = request.args.get('next') # this gives the url from where the login page was accessed
             print(nextp)
             if next is None or not nextp.startswith('/'):
                 return redirect(url_for('index'))
             return redirect(nextp)
         else:
-            flash(error)
+            flash(error, 'danger')
     return render_template('user.html', form=login_form, heading='Login')
+
+@auth_bp.route('/logout')
+def logout():
+    logout_user()
+    flash('You have been logged out.', 'success')
+    return redirect(url_for('index'))
