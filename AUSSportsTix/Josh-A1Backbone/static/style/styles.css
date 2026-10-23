@@ -1,0 +1,111 @@
+/* ClimbProEvents custom styles (Bootstrap handles the rest) */
+
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@800&family=Inter:wght@400;600&display=swap");
+
+:root {
+  --granite: #23272f;
+  --chalk: #f7f4ef;
+  --orange: #e8590c;
+  --orange-dark: #c2410c;
+  --line: #e4e0d8;
+}
+
+body {
+  background: var(--chalk);
+  font-family: Inter, system-ui, sans-serif;
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3 {
+  font-family: Archivo, system-ui, sans-serif;
+  font-weight: 800;
+}
+
+/* Navbar */
+.navbar-cpe {
+  background: var(--granite);
+}
+.navbar-cpe .nav-link {
+  color: #d6d8dc;
+}
+.navbar-cpe .nav-link.active {
+  color: #fff;
+}
+
+/* Demo sign-in chip */
+.demo-chip {
+  color: #e2e4e8;
+  border: 1px solid #ffffff30;
+  border-radius: 50rem;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8125rem;
+}
+
+/* Hero */
+.hero {
+  color: #fff;
+  background: linear-gradient(120deg, var(--granite), #303740);
+}
+.hero h1 span {
+  color: #ff9556;
+}
+.hero p {
+  color: #d9dce1;
+}
+
+/* Buttons */
+.btn-cpe {
+  background: var(--orange);
+  border: none;
+  color: #191d24;
+  font-weight: 600;
+}
+.btn-cpe:hover {
+  background: var(--orange-dark);
+  color: #fff;
+}
+.btn-outline-cpe {
+  border: 1px solid var(--line);
+  color: var(--granite);
+}
+.btn-outline-cpe:hover {
+  background: var(--granite);
+  color: #fff;
+}
+
+/* Forms */
+.form-control,
+.form-select {
+  border-color: var(--line);
+}
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--orange-dark);
+  box-shadow: 0 0 0 0.2rem #e8590c24;
+}
+
+/* Progress bars (entry availability) */
+.progress {
+  height: 8px;
+}
+.progress-bar {
+  background: var(--orange);
+}
+
+/* Footer */
+.site-footer {
+  background: var(--granite);
+  color: #c9cdd3;
+  font-size: 0.875rem;
+}
+.site-footer a {
+  color: #dfe1e5;
+}
+
+/* Division rows on the create event form */
+.division-row {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}

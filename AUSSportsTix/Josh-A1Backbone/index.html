@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en-AU">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Browse events | ClimbProEvents</title>
+    <link rel="icon" href="static/img/logo.svg" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link href="static/style/styles.css" rel="stylesheet" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-cpe sticky-top">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">
+          <img src="static/img/logo.svg" alt="" width="38" height="38" />
+          ClimbProEvents
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#mainNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="index.html">Browse events</a>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="create-event.html">Create event</a></li>
+            <li class="nav-item"><a class="nav-link" href="booking-history.html">My bookings</a></li>
+          </ul>
+          <span class="demo-chip">Josh Keen · sign-in</span>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <section class="hero">
+        <div class="container py-5">
+          <h1>
+            Australia's home of <span>bouldering and lead</span> competitions
+          </h1>
+          <p class="my-4">
+            Browse or enter climbing competitions at every level!
+          </p>
+          <a class="btn btn-cpe me-2" href="#events">Browse events</a>
+          <a class="btn btn-outline-light" href="create-event.html">
+            Create Competition
+          </a>
+        </div>
+      </section>
+      <section class="container my-5" id="events">
+        <h2 class="mb-4">Browse the calendar</h2>
+
+
+        <fieldset class="mb-3">
+          <legend>Discipline</legend>
+          <label class="me-3"><input type="radio" name="discipline" checked /> All</label>
+          <label class="me-3"><input type="radio" name="discipline" /> Bouldering</label>
+          <label><input type="radio" name="discipline" /> Lead</label>
+        </fieldset>
+        <fieldset class="mb-4">
+          <legend>Tier</legend>
+          <label class="me-3"><input type="radio" name="tier" checked /> All</label>
+          <label class="me-3"><input type="radio" name="tier" /> National</label>
+          <label class="me-3"><input type="radio" name="tier" /> State</label>
+          <label class="me-3"><input type="radio" name="tier" /> Local</label>
+          <label><input type="radio" name="tier" /> Casual</label>
+        </fieldset>
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+
+
+          <div class="col">
+            <article class="card h-100 shadow-sm">
+              <img src="static/img/event-01.svg" class="card-img-top" alt="" />
+              <div class="card-body">
+                <span class="badge text-bg-success">Open</span>
+                <h3 class="mt-2"><a href="event.html">Queensland State Bouldering Titles 2026</a></h3>
+                <p class="mb-1">Gravity Lab — West End, Brisbane QLD</p>
+                <p class="mb-1">Saturday 26 September 2026</p>
+                <p>Open Women 29 left · Open Men 34 left · Youth Women Full · Spectators 84 left</p>
+              </div>
+            </article>
+          </div>
+          <div class="col">
+            <article class="card h-100 shadow-sm">
+              <img src="static/img/event-02.svg" class="card-img-top" alt="" />
+              <div class="card-body">
+                <span class="badge text-bg-success">Open</span>
+                <h3 class="mt-2"><a href="event.html">Bouldering</a></h3>
+                <p class="mb-1">Social Climb — Brisbane QLD</p>
+                <p class="mb-1">Friday 9 October 2026</p>
+                <p>Open Women 17 left · Open Men 21 left · Spectators 44 left</p>
+              </div>
+            </article>
+          </div>
+          <div class="col">
+            <article class="card h-100 shadow-sm">
+              <img src="static/img/event-03.svg" class="card-img-top" alt="" />
+              <div class="card-body">
+                <span class="badge text-bg-dark">Sold Out</span>
+                <h3 class="mt-2"><a href="event.html">NSW Lead State Championships</a></h3>
+                <p class="mb-1">Climbing Center — Sydney NSW</p>
+                <p class="mb-1">Saturday 17 October 2026</p>
+                <p>All divisions full · Spectator pool full</p>
+              </div>
+            </article>
+          </div>
+          <div class="col">
+            <article class="card h-100 shadow-sm">
+              <img src="static/img/event-04.svg" class="card-img-top" alt="" />
+              <div class="card-body">
+                <span class="badge text-bg-success">Open</span>
+                <h3 class="mt-2"><a href="event.html">National Lead Titles</a></h3>
+                <p class="mb-1">Boulder Co. — Melbourne VIC</p>
+                <p class="mb-1">Saturday 7 November 2026</p>
+                <p>Open Women 38 left · Open Men 31 left · Youth Men 19 left · Spectators 121 left</p>
+              </div>
+            </article>
+          </div>
+          <div class="col">
+            <article class="card h-100 shadow-sm">
+              <img src="static/img/event-05.svg" class="card-img-top" alt="" />
+              <div class="card-body">
+                <span class="badge text-bg-danger">Cancelled</span>
+                <h3 class="mt-2"><a href="event.html">New Climbers Night</a></h3>
+                <p class="mb-1">Cliff Bouldering — Sunshine Coast QLD</p>
+                <p class="mb-1">Saturday 12 September 2026</p>
+                <p>Cancelled by organiser</p>
+              </div>
+            </article>
+          </div>
+          <div class="col">
+            <article class="card h-100 shadow-sm">
+              <img src="static/img/event-06.svg" class="card-img-top" alt="" />
+              <div class="card-body">
+                <span class="badge text-bg-secondary">Inactive</span>
+                <h3 class="mt-2"><a href="event.html">Bouldering League</a></h3>
+                <p class="mb-1">Gravity Lab — Brisbane QLD</p>
+                <p class="mb-1">Saturday 15 August 2026</p>
+                <p>Event ended</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer py-5">
+      <div class="container">
+        <p><strong>ClimbProEvents</strong></p>
+        <p>
+          ClimbProEvents is Australia's central hub for bouldering and lead
+          climbing competitions.
+        </p>
+        <p class="mb-0">
+          IAB207 Assessment 1 Part 2 — n10910433
+        </p>
+      </div>
+    </footer>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    ></script>
+  </body>
+</html>
