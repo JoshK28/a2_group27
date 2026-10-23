@@ -8,6 +8,16 @@ from . import db
 # Create a blueprint - make sure all BPs have unique names
 auth_bp = Blueprint('auth', __name__)
 
+@auth_bp.route('/register', methods=['GET', 'POST'])
+def register():
+    register_form = RegisterForm()
+    if register_form.validate_on_submit():
+        # Process registration logic here
+        pass
+    return render_template('register.html', form=register_form)
+
+
+
 # this is a hint for a login function
 @auth_bp.route('/login', methods=['GET', 'POST'])
 # view function
