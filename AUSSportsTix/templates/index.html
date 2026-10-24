@@ -21,6 +21,17 @@
 <div class="Container my-5" id="events">
     <h2>Browse Events</h2>
 
+    <!-- Search form -->
+     <form class="row g-2 my-3" method="get" action="{{ url_for('main.index') }}">
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="search" placeholder="Search by event name" value="{{ search }}">
+        </div>
+
+        <div class="col-md-3">
+            <button class="btn btn-priamry" type="submit"> Search </button>
+        </div>
+     </form>
+
     <ul>
         <!-- Event cards scaling with screen width -->
         <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-4">
@@ -28,7 +39,7 @@
 
             <div class="col">
 
-                <div class="card event-card h-100>">
+                <div class="card event-card h-100">
 
                     <img src="{{ event.image }}"> 
 

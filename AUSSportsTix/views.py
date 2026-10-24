@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request
 from .models import Event, update_inactive_events
 from . import db
 
@@ -9,6 +9,21 @@ def index():
     # mark events listed to prior date as inactive
     update_inactive_events()
 
-    # Get events in order of date
-    events = db.session.scalars(db.select(Event).order_by(Event.start)).all()
-    return render_template('index.html', events=events)
+    # Read the search box
+    search = request.args.get('search', '')
+
+    #s tart with all events and narrow down if search is utilised
+    query = db.select(Event).order_by(Event.start)
+
+    if search: 
+        query = query.where(Event.title.like(f'%{search}%') )
+    events = db.session.scalars(query).all()
+
+    return render_template('index.html', events=events, search=search)
+
+
+
+   
+
+                              
+
