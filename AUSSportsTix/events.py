@@ -1,7 +1,7 @@
 from flask import Blueprint, flash, redirect, render_template, request, url_for, abort
 from flask_login import current_user, login_required
 from . import db
-from .models import Event, Comment, Order
+from .models import Event, Comment, Order, update_inactive_events
 from .forms import CancelEventForm, EventForm
 import os
 from uuid import uuid4
@@ -53,6 +53,9 @@ def create():
 @event_bp.route('/<int:id>/update', methods=['GET', 'POST'])
 @login_required
 def update(id):
+    #Automatically check for events that are no longer active.
+    update_inactive_events()
+
     event = db.session.scalar(db.select(Event).where(Event.id == id))
     if event is None:
         abort(404, description="Event not found")
@@ -62,7 +65,7 @@ def update(id):
         return redirect(url_for('main.index'))  # Redirect to a safe page
 
     form = EventForm(obj=event)
-    
+
     form.submit.label.text = "Update Event"
     form.image.data = request.files.get('image')  # Get the uploaded file from the request
     booked = event.ticket_capacity - event.tickets_remaining
@@ -85,10 +88,14 @@ def update(id):
                 event.tickets_remaining=form.ticket_capacity.data - booked
                 event.aoc_mode=form.aoc_mode.data
                 event.aoc_text=form.aoc_text.data
+
+                if event.status != 'Cancelled':
+                    event.status = 'Sold Out' if event.tickets_remaining == 0 else 'Open'
                 db.session.commit()
                 flash('Event updated successfully!', 'success')
                 return redirect(url_for('event.update', id=event.id))  # Redirect to the same page or another page as needed
     return render_template('events/create.html', form=form, event=event, cancel_form=CancelEventForm())
+
 
 
 @event_bp.route('/<int:id>/cancel', methods=['POST'])

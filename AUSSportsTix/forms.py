@@ -49,14 +49,15 @@ class EventForm(FlaskForm):
     # Create Event submit button
     submit = SubmitField("Create Event")
 
+    def validate_start(self, field):
+        if field.data and field.data <= datetime.now():
+            raise ValidationError("The event cannot be in the past.")
+
+    def validate_end(self, field):
+        if field.data and self.start.data and field.data <= self.start.data:
+            raise ValidationError("The end time cannot be before the start time.")
+
 class CancelEventForm(FlaskForm):
     confirm = BooleanField("Are you sure you want to cancel this event?", validators=[InputRequired()])
     cancel = SubmitField("Cancel Event")
 
-    def validate_start(self, field):
-        if field.data and field.data < datetime.now():
-            raise ValidationError("The event cannot be in the past.")
-
-    def validate_end(self, field):
-        if field.data and self.start.data and field.data < self.start.data:
-            raise ValidationError("The end time cannot be before the start time.")
