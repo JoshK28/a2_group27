@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileAllowed
 from wtforms.fields import TextAreaField, SubmitField, StringField, PasswordField,SelectField, DateTimeLocalField, IntegerField, FloatField
 from wtforms.validators import InputRequired, Length, Email, EqualTo, NumberRange, ValidationError
 from .models import SPORT, GENDER, STATUS, AOC_MODE
@@ -32,6 +33,8 @@ class RegisterForm(FlaskForm):
 class EventForm(FlaskForm):
     title = StringField("Event Title", validators=[InputRequired(), Length(min=2, max=100)])
     description = TextAreaField("Event Description", validators=[InputRequired()])
+    image = FileField("Event Image", validators=[FileAllowed(['jpg', 'jpeg', 'png'], "Only JPG/PNG images allowed.")], 
+                      description="Upload an image for the event (optional). If not provided, a default image will be used.")
     start = DateTimeLocalField("Start Time", format='%Y-%m-%dT%H:%M', validators=[InputRequired()])
     end = DateTimeLocalField("End Time", format='%Y-%m-%dT%H:%M', validators=[InputRequired()])
     location = StringField("Event Location", validators=[InputRequired(), Length(min=2, max=200)])
