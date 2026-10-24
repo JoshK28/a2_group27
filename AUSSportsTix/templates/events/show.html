@@ -9,9 +9,9 @@
 
     <!-- Title: status, sports and gender-->
      <header class="mb-3">
-        <span class="badge text-bg{{ badge[event.status]}}">{{event.status}}</span>
-        <span class="badge text-bg-light border"> {{event.sport}} </span>"
-        <span class="badge text-bg-light border"> {{event.gender}} </span>"
+        <span class="badge text-bg-{{ badge[event.status]}}">{{event.status}}</span>
+        <span class="badge text-bg-light border"> {{event.sport}} </span>
+        <span class="badge text-bg-light border"> {{event.gender}} </span>
         <h1 class="mt-2"> {{event.title}}</h1>
      </header>
 
@@ -23,11 +23,16 @@
                     <ul class="list-unstyled">
                         <li><strong>Start:</strong> {{event.start.strftime ('%A %d %B %Y, %I:%M %p')}}</li>
                         <li><strong>End:</strong> {{event.end.strftime ('%A %d %B %Y, %I:%M %p')}}</li>
-                        <li><strong>Location:</strong> {{event.location}}</li>
-                        <li><strong>Price:</strong> ${{event.price}}</li>
+                        <li><strong>Location:</strong> {{event.location}}, {{event.city}}</li>
+                        <li><strong>Organiser:</strong> {{event.owner.first_name}} {{event.owner.surname}}</li>
+                        <br>
+                        <li><strong>Capacity:</strong> {{event.tickets_remaining}} of {{event.ticket_capacity}}</li>
+                        <li><strong>Price:</strong> ${{ "%.2f"|format(event.ticket_price) }}</li>
                     </ul>
                 </div>
             </div>
+        </div>
+        <div class="col-lg-8 order-lg-1">
             <img src="{{event.image}}" class="img-fluid rounded mb-4" alt="{{event.title}}">
 
             <section class="mb-4">
