@@ -50,7 +50,7 @@ def create():
             db.session.add(event)
             db.session.commit()
             flash('Event created successfully!', 'success')
-            return redirect(url_for('event.create'))  # Redirect to the same page or another page as needed
+            return redirect(url_for('event.show', id=event.id))
     return render_template('events/create.html', form=form)
 
 # Update event details for event owner only
@@ -101,7 +101,7 @@ def update(id):
                     event.status = 'Sold Out' if event.tickets_remaining == 0 else 'Open'
                 db.session.commit()
                 flash('Event updated successfully!', 'success')
-                return redirect(url_for('event.update', id=event.id))  # Redirect to the same page or another page as needed
+                return redirect(url_for('event.show', id=event.id))
     return render_template('events/create.html', form=form, event=event, cancel_form=CancelEventForm())
 
 
@@ -124,7 +124,7 @@ def cancel(id):
         event.status = 'Cancelled'
         db.session.commit()
         flash('Event cancelled.', 'success')
-        return redirect(url_for('event.update', id=event.id))
+        return redirect(url_for('event.show', id=event.id))
     
     flash('Please confirm cancellation.', 'warning')
     return redirect(url_for('event.update', id=event.id))
