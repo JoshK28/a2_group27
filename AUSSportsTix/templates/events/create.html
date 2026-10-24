@@ -11,6 +11,10 @@
                     <img src="{{ url_for('static', filename=event.image) }}" alt="Event Image" class="img-fluid mb-3">
                 {% endif %}
                 {{ render_form(form) }}
+                {% if event and event.status != 'Cancelled' %}
+                    <p>Cancelling stops all new bookings.</p>
+                    {{ render_form(cancel_form, action =url_for('event.cancel', id=event.id), button_map={'cancel': 'btn btn-danger'}) }}
+                {% endif %}
             </div>
         </div>
     </main>

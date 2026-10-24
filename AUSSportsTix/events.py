@@ -2,7 +2,7 @@ from flask import Blueprint, flash, redirect, render_template, request, url_for,
 from flask_login import current_user, login_required
 from . import db
 from .models import Event, Comment, Order
-from .forms import EventForm
+from .forms import CancelEventForm, EventForm
 import os
 from uuid import uuid4
 from werkzeug.utils import secure_filename
@@ -50,7 +50,6 @@ def create():
     return render_template('events/create.html', form=form)
 
 
-
 @event_bp.route('/<int:id>/update', methods=['GET', 'POST'])
 @login_required
 def update(id):
@@ -89,4 +88,24 @@ def update(id):
                 flash('Event updated successfully!', 'success')
                 return redirect(url_for('event.update', id=event.id))  # Redirect to the same page or another page as needed
     return render_template('events/create.html', form=form, event=event)
-    
+
+
+@event_bp.route('/<int:id>/cancel', methods=['POST'])
+@login_required
+def cancel(id):
+    event = db.session.scalar(db.select(Event).where(Event.id == id))
+    if event is None:
+        abort(404, description="Event not found")
+
+    if event.user_id != current_user.id:
+        flash('You do not have permission to cancel this event.', 'danger')
+        return redirect(url_for('main.index'))  # Redirect to a safe page
+
+    form = CancelEventForm()
+    if form.validate_on_submit():
+        event.status = 'Cancelled'
+        db.session.commit()
+        flash('Event cancelled.', 'success')
+        return redirect(url_for('event.update', id=event.id))
+    flash('Please confirm cancellation.', 'warning')
+    return redirect(url_for('event.update', id=event.id))
