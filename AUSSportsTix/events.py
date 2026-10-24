@@ -2,7 +2,7 @@ from flask import Blueprint, flash, redirect, render_template, request, url_for,
 from flask_login import current_user, login_required
 from . import db
 from .models import Event, Comment, Order, update_inactive_events
-from .forms import CancelEventForm, EventForm
+from .forms import CancelEventForm, EventForm, CommentForm
 import os
 from uuid import uuid4
 from werkzeug.utils import secure_filename
@@ -139,4 +139,28 @@ def show(id):
     if event is None:
         abort(404)
 
-    return render_template('events/show.html', event = event)
+    # Create comment form
+    form = CommentForm()
+    return render_template('events/show.html', event = event, form = form)
+
+
+
+# Post a comment to an event as logged in user
+@event_bp.route('/<int:id>/comment', methods=['GET', 'POST'])
+@login_required
+def comment(id):
+    event = db.session.scalar(db.select(Event).where(Event.id == id))
+    if event is None:
+        abort(404)
+
+    form = CommentForm()
+    if form.validate_on_submit():
+        comment = Comment(content=form.content.data, user=current_user, event=event)
+        db.session.add(comment)
+        db.session.commit()
+        flash('Comment posted successfully!', 'success')
+    elif request.method == 'POST':
+        # Invalid submission. Either empty or exceeds 500 characters. Show error message. 
+        flash('Write comment between 1 and 500 characters before submitting.', 'warning')
+
+    return redirect(url_for('event.show', id=event.id))

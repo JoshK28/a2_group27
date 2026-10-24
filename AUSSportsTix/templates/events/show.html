@@ -1,4 +1,5 @@
 {%- extends "base.html" -%}
+{% from 'bootstrap5/form.html' import render_form %}
 <!-- Event details page -->
 {%block content %}
 
@@ -76,6 +77,16 @@
                 {% else %}
                     <p class="text-muted">No comments yet.</p>
                 {% endfor %}
+
+
+                <!-- Comment form sends logged-out users to login page -->
+                 <div class="mt-4">
+                    {% if not current_user.is_authenticated %}
+                    <p class="text-muted">Please <a href="{{ url_for('auth.login') }}">log in</a> to post a comment.</p>
+                    {% endif %}
+                    {{render_form(form, action=url_for('event.comment', id=event.id))}}
+                 </div>
+
             </section>
         </div>
     </div>
