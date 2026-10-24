@@ -1,0 +1,9 @@
+{%- extends "base.html" -%}
+{%block content %}
+    <main class="container my-4">
+        <h1> {{event.title}}</h1>
+        <img src="{{event.image}}" class="img-fluid" alt="{{event.title}}">
+        <p>{{event.start.strftime %A %d %B %Y, %I:%M %p}}</p>
+        <p>{{event.description}}</p>
+    </main>
+{% endblock %}

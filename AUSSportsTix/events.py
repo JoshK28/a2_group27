@@ -128,3 +128,15 @@ def cancel(id):
     
     flash('Please confirm cancellation.', 'warning')
     return redirect(url_for('event.update', id=event.id))
+
+
+# Show event details and comments to anyone
+@event_bp.route('/<int:id>')
+def show(id):
+    update_inactive_events()
+
+    event = db.session.scalar(db.select(Event).where(Event.id == id))
+    if event is None:
+        abort(404)
+
+    return render_template('events/show.html', event = event)
