@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from wtforms.fields import BooleanField, TextAreaField, SubmitField, StringField, PasswordField,SelectField, DateTimeLocalField, IntegerField, FloatField
+from wtforms.fields import TextAreaField, SubmitField, StringField, PasswordField,SelectField, DateTimeLocalField, IntegerField, FloatField
 from wtforms.validators import InputRequired, Length, Email, EqualTo, NumberRange, ValidationError
 from .models import SPORT, GENDER, STATUS, AOC_MODE
 from datetime import datetime
@@ -50,14 +50,9 @@ class EventForm(FlaskForm):
     submit = SubmitField("Create Event")
 
     def validate_start(self, field):
-        if field.data and field.data <= datetime.now():
+        if field.data and field.data < datetime.now():
             raise ValidationError("The event cannot be in the past.")
 
     def validate_end(self, field):
-        if field.data and self.start.data and field.data <= self.start.data:
+        if field.data and self.start.data and field.data < self.start.data:
             raise ValidationError("The end time cannot be before the start time.")
-
-class CancelEventForm(FlaskForm):
-    confirm = BooleanField("Are you sure you want to cancel this event?", validators=[InputRequired()])
-    cancel = SubmitField("Cancel Event")
-
