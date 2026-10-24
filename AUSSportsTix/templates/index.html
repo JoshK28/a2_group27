@@ -6,13 +6,41 @@
     <h2>Browse Events</h2>
 
     <ul>
-        {% for event in events %}
-        <li> {{ event.title }} ({{ event.status }}) - {{ event.start.strftime('%d %b %Y') }}</li>
-        {% else %}
-        <li> No events yet. </li>
-        {% endfor %}
-    </ul>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-4">
+            {% for event in events %}
 
+            <div class="col">
+
+                <div class="card event-card h-100>">
+
+                    <img src="{{ event.image }}"> 
+
+                    <div>
+                        <h5 class="card-title">
+                            <a href="#"> {{ event.title }} </a>
+                        </h5>
+
+                        <p class="card-text">
+                            {{ event.start.strftime('%d %b %Y') }} <br>
+                            {{ event.location }} , {{ event.city }} <br>
+                            {{ event.sport }} , {{ event.gender }} <br>
+                            ${{ '%.2f' % event.ticket_price }} , {{ event.tickets_remaining }} tickets left
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            {% else %}
+
+            <div>
+
+                <div class="alert alert-info"> No events yet. </div>
+
+            </div>
+
+            {% endfor %}
+        </div>
+    </ul>
 </div>
 
 {% endblock %}

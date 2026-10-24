@@ -21,6 +21,7 @@ def populate_database_with_sample_data():
         }
     ]
 
+    
     events = [
         {
             "title": "A-League Men: Melbourne Derby",
