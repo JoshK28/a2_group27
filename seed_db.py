@@ -18,6 +18,22 @@ def populate_database_with_sample_data():
             "password_hash": generate_password_hash(password),
             "phone_number": "123-456-7890",
             "street_address": "123 Main St, Melbourne, VIC 3000"
+        },
+        {
+            "first_name": "Jane",
+            "surname": "Crane",
+            "email": "jane.crane@example.com",
+            "password_hash": generate_password_hash(password),
+            "phone_number": "098-765-4321",
+            "street_address": "456 Oak Ave, Sydney, NSW 2000"
+        },
+        {
+            "first_name": "Alice",
+            "surname": "Smith",
+            "email": "alice.happy22@test.com",
+            "password_hash": generate_password_hash(password),
+            "phone_number": "555-123-4567",
+            "street_address": "789 Elm St, Brisbane, QLD 4000"
         }
     ]
 
@@ -173,6 +189,36 @@ def populate_database_with_sample_data():
             "timestamp": datetime(2027, 6, 15, 20, 0),
             "user_id": 1,
             "event_id": 1
+        },
+        {
+            "content": "Looking forward to it!",
+            "timestamp": datetime(2026, 12, 15, 7, 30),
+            "user_id": 2,
+            "event_id": 1
+        },
+        {
+            "content": "How packed do you guys think it will be?",
+            "timestamp": datetime(2026, 11, 15, 10, 45),
+            "user_id": 3,
+            "event_id": 3
+        },
+        {
+            "content": "Can't wait!",
+            "timestamp": datetime(2026, 12, 13, 22, 45),
+            "user_id": 2,
+            "event_id": 3
+        },
+        {
+            "content": "Is there a dress code?",
+            "timestamp": datetime(2026, 12, 14, 18, 15),
+            "user_id": 4,
+            "event_id": 4
+        },
+        {
+            "content": "Shame to have missed it.",
+            "timestamp": datetime(2026, 12, 14, 15, 10),
+            "user_id": 5,
+            "event_id": 4
         }
     ]
 
