@@ -1,13 +1,28 @@
 {% extends 'base.html' %}
 
+
+
+{% block header %}
+<!-- Hero Banner with site name and description -->
+<section class="hero py-5">
+    <div class="Container">
+        <h1> AUSSportsTix </h1>
+        <p class="lead my-3"> Find and book tickets to a multitude of sport events across Australia! </p>
+        <a class="btn btn-light" href="#events"> Browse events </a>
+    </div>
+</section>
+{% endblock %}
+
 {% block content %}
 
+<!-- Boostrap colours for each status -->
 {% set badge = {'Open': 'success', 'Sold Out': 'warning', 'Cancelled': 'danger', 'Inactive': 'secondary'} %}
 
-<div class="Container my-5">
+<div class="Container my-5" id="events">
     <h2>Browse Events</h2>
 
     <ul>
+        <!-- Event cards scaling with screen width -->
         <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-4">
             {% for event in events %}
 
