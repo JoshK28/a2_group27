@@ -23,7 +23,7 @@ def create():
     form = EventForm()
     if form.validate_on_submit():
         if not form.image.data:
-            form.image.data.errors.append('Choose an event image.')
+            form.image.errors.append('Choose an event image.')
         else:
             event = Event(
                 title=form.title.data,
