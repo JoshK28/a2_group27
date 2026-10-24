@@ -1,7 +1,9 @@
 from flask_wtf import FlaskForm
 from wtforms.fields import TextAreaField, SubmitField, StringField, PasswordField,SelectField, DateTimeLocalField, IntegerField, FloatField
-from wtforms.validators import InputRequired, Length, Email, EqualTo
+from wtforms.validators import InputRequired, Length, Email, EqualTo, NumberRange, ValidationError
 from .models import SPORT, GENDER, STATUS, AOC_MODE
+from datetime import datetime
+
 
 # creates the login information
 class LoginForm(FlaskForm):
@@ -28,18 +30,24 @@ class RegisterForm(FlaskForm):
 
     #Creates the form for creating an event
 class EventForm(FlaskForm):
-    title = StringField("Event Title", validators=[InputRequired()])
+    title = StringField("Event Title", validators=[InputRequired(), Length(min=2, max=100)])
     description = TextAreaField("Event Description", validators=[InputRequired()])
     start = DateTimeLocalField("Start Time", format='%Y-%m-%dT%H:%M', validators=[InputRequired()])
     end = DateTimeLocalField("End Time", format='%Y-%m-%dT%H:%M', validators=[InputRequired()])
-    location = StringField("Event Location", validators=[InputRequired()])
-    city = StringField("City", validators=[InputRequired()])
+    location = StringField("Event Location", validators=[InputRequired(), Length(min=2, max=200)])
+    city = StringField("City", validators=[InputRequired(), Length(min=2, max=100)])
     sport = SelectField("Sport", choices=SPORT, validators=[InputRequired()])
     gender = SelectField("Gender", choices=GENDER, validators=[InputRequired()])
-    ticket_price = FloatField("Ticket Price", validators=[InputRequired()])
-    ticket_capacity = IntegerField("Ticket Capacity", validators=[InputRequired()])
+    ticket_price = FloatField("Ticket Price", validators=[InputRequired(), NumberRange(min=0, max=10000)])
+    ticket_capacity = IntegerField("Ticket Capacity", validators=[InputRequired(), NumberRange(min=1, max=100000)])
     aoc_mode = SelectField("AOC Mode", choices=[(mode, mode.title()) for mode in AOC_MODE], validators=[InputRequired()])
     aoc_text = TextAreaField("AOC Text")
-
+    
     # Create Event submit button
     submit = SubmitField("Create Event")
+
+    def validate_time(self, field):
+        if field.data and field.data < datetime.now():
+            raise ValidationError("The event cannot be in the past.")
+        if field.data and self.start.data and field.data < self.start.data:
+            raise ValidationError("The end time cannot be before the start time.")
