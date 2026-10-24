@@ -9,6 +9,7 @@ from werkzeug.utils import secure_filename
 
 event_bp = Blueprint('event', __name__, url_prefix='/events')
 
+#save uploaded image as unique name and return database path
 def check_image(form):
     filename = uuid4().hex + "_" + secure_filename(form.image.data.filename)
     upload_path = os.path.join(os.path.dirname(__file__), 'static', 'image', filename)
@@ -16,15 +17,17 @@ def check_image(form):
     return '/static/image/' + filename
 
 
-
+# Create event for logged in users
 @event_bp.route('/create', methods=['GET', 'POST'])
 @login_required
 def create():
     form = EventForm()
     if form.validate_on_submit():
+        #image required
         if not form.image.data:
             form.image.errors.append('Choose an event image.')
         else:
+            #new events form format with status:Open
             event = Event(
                 title=form.title.data,
                 description=form.description.data,
@@ -42,24 +45,27 @@ def create():
                 aoc_mode=form.aoc_mode.data,
                 aoc_text=form.aoc_text.data,
                 user_id=current_user.id)
-        
+
+            #save and commit to database
             db.session.add(event)
             db.session.commit()
             flash('Event created successfully!', 'success')
             return redirect(url_for('event.create'))  # Redirect to the same page or another page as needed
     return render_template('events/create.html', form=form)
 
-
+# Update event details for event owner only
 @event_bp.route('/<int:id>/update', methods=['GET', 'POST'])
 @login_required
 def update(id):
-    #Automatically check for events that are no longer active.
+    # Automatically check for events that are no longer active.
     update_inactive_events()
 
+    # Thrown 404 if event can't be found
     event = db.session.scalar(db.select(Event).where(Event.id == id))
     if event is None:
         abort(404, description="Event not found")
 
+    # Only event owner can update.
     if event.user_id != current_user.id:
         flash('You do not have permission to edit this event.', 'danger')
         return redirect(url_for('main.index'))  # Redirect to a safe page
@@ -68,6 +74,7 @@ def update(id):
 
     form.submit.label.text = "Update Event"
     form.image.data = request.files.get('image')  # Get the uploaded file from the request
+    # Already sold tickets
     booked = event.ticket_capacity - event.tickets_remaining
     if form.validate_on_submit():
             if form.ticket_capacity.data < booked:
@@ -89,6 +96,7 @@ def update(id):
                 event.aoc_mode=form.aoc_mode.data
                 event.aoc_text=form.aoc_text.data
 
+                #Event status logic to switch event status
                 if event.status != 'Cancelled':
                     event.status = 'Sold Out' if event.tickets_remaining == 0 else 'Open'
                 db.session.commit()
@@ -97,7 +105,7 @@ def update(id):
     return render_template('events/create.html', form=form, event=event, cancel_form=CancelEventForm())
 
 
-
+# Cancel even after only owner confirms
 @event_bp.route('/<int:id>/cancel', methods=['POST'])
 @login_required
 def cancel(id):
@@ -105,15 +113,18 @@ def cancel(id):
     if event is None:
         abort(404, description="Event not found")
 
+    #Prevent unauthorised users from cancelling. Redirect.
     if event.user_id != current_user.id:
         flash('You do not have permission to cancel this event.', 'danger')
         return redirect(url_for('main.index'))  # Redirect to a safe page
 
+    #import flask form:CancelEventForm. Tick box must be active to cancel
     form = CancelEventForm()
     if form.validate_on_submit():
         event.status = 'Cancelled'
         db.session.commit()
         flash('Event cancelled.', 'success')
         return redirect(url_for('event.update', id=event.id))
+    
     flash('Please confirm cancellation.', 'warning')
     return redirect(url_for('event.update', id=event.id))

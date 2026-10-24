@@ -7,6 +7,7 @@ GENDER = ['Male','Female']
 STATUS = ['Open','Inactive','Sold Out','Cancelled']
 AOC_MODE = ['none', 'generic','enhanced']
 
+# Registered user can create events, comment and book. Model outlines database column format stored.
 class User(db.Model, UserMixin):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
@@ -21,6 +22,7 @@ class User(db.Model, UserMixin):
     comments = db.relationship('Comment', backref='user')
     orders = db.relationship('Order', backref='user')
 
+# Event created by registered user foreign key. Model outlines database column format stored.
 class Event(db.Model):
     __tablename__ = 'events'
     id = db.Column(db.Integer, primary_key=True)
@@ -45,7 +47,7 @@ class Event(db.Model):
     comments = db.relationship('Comment', backref='event')
     orders = db.relationship('Order', backref='event')
 
-
+# Comment class model outlines database format of a event comment. Unique user and Event foreign keys.
 class Comment(db.Model):
     __tablename__ = 'comments'
     id = db.Column(db.Integer, primary_key=True)
@@ -54,6 +56,7 @@ class Comment(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     event_id = db.Column(db.Integer, db.ForeignKey('events.id'), nullable=False)
 
+# Order booking for a user buying a quantity of tickets for event. User and event foreign key.
 class Order(db.Model):
     __tablename__ = 'orders'
     id = db.Column(db.Integer, primary_key=True)
