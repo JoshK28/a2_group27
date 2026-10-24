@@ -62,3 +62,14 @@ class Order(db.Model):
     book_time = db.Column(db.DateTime, default=datetime.now)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     event_id = db.Column(db.Integer, db.ForeignKey('events.id'), nullable=False)
+
+# This function will update the status of events that have passed their start time to 'Inactive' if they are currently 'Open' or 'Sold Out'.
+def update_inactive_events():
+
+    events = db.session.scalars(db.select(Event)
+        .where(Event.start <= datetime.now(),
+        Event.status.in_(['Open', 'Sold Out']))).all()
+
+    for event in events:
+        event.status = 'Inactive'
+    db.session.commit()
