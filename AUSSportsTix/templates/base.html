@@ -56,6 +56,7 @@
     </header>
     <!-- Bootstrap color for each status -->
     {% set badge = {'Open': 'success', 'Inactive': 'secondary', 'Sold Out': 'warning', 'Cancelled': 'danger'} %}
+    {% set closed = {'Inactive': 'This event is inactive.', 'Sold Out': 'This event has sold out.', 'Cancelled': 'This event has been cancelled.'} %}
     {% block content %}
 
     {% endblock %}

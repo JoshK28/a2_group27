@@ -29,6 +29,18 @@
                         <li><strong>Capacity:</strong> {{event.tickets_remaining}} of {{event.ticket_capacity}}</li>
                         <li><strong>Price:</strong> ${{ "%.2f"|format(event.ticket_price) }}</li>
                     </ul>
+                    <!--Booking form -->
+                    {% if event.status == "Open" %}
+                    <p class="text-muted">Booking form</p>
+                    {% else %}
+                    <div class= "alert alert-warning" role="alert">   {{closed[event.status]}}  </div>
+                    {% endif %}
+                    
+                    <!--For authenticated event owner-->
+                    {% if current_user.is_authenticated and current_user.id == event.user_id %}
+                    <hr>
+                    <a class="btn btn-outline-secondary w-100" href="{{url_for('event.update', id=event.id)}}"><i class="bi bi-pencil"></i> Edit or Cancel Event</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -39,6 +51,13 @@
                 <h2 class="h4"><i class="bi bi-info-circle"></i> Event Details</h2>
                 <p class="event-description">{{event.description}}</p>
             </section>
+
+            {% if event.aoc_mode != 'none' and event.aoc_text %}
+            <section class="mb-4 p-3 border-start border-4 rounded">
+                <h2 class="h5">Acknowledgements of Country</h2>
+                <p class="mb-0">{{event.aoc_text}}</p>
+            </section>
+            {% endif %}
         </div>
     </div>
 
