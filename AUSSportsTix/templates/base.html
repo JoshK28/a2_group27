@@ -17,9 +17,8 @@
             <div class="container-fluid">
                 <ul class="navbar-nav">
              {% if current_user.is_authenticated %}
-             #attach create event to navbar
-             <li class="nav-item">
-                <a class="nav-link {% if request.endpoint == 'events.create_event' %}active{% endif %}" href="{{ url_for('events.create_event') }}">Create Event</a>
+             <li class="nav-item">              
+                <a class="nav-link {% if request.endpoint == 'event.create' %}active{% endif %}" href="{{ url_for('event.create') }}">Create Event</a>
              </li>
 
              <li class="nav-item">

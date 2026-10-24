@@ -40,3 +40,6 @@ class EventForm(FlaskForm):
     ticket_capacity = IntegerField("Ticket Capacity", validators=[InputRequired()])
     aoc_mode = SelectField("AOC Mode", choices=[(mode, mode.title()) for mode in AOC_MODE], validators=[InputRequired()])
     aoc_text = TextAreaField("AOC Text")
+
+    # Create Event submit button
+    submit = SubmitField("Create Event")
