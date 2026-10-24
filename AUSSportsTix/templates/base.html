@@ -54,7 +54,8 @@
         {% endblock %}
 
     </header>
-
+    <!-- Bootstrap color for each status -->
+    {% set badge = {'Open': 'success', 'Inactive': 'secondary', 'Sold Out': 'warning', 'Cancelled': 'danger'} %}
     {% block content %}
 
     {% endblock %}
