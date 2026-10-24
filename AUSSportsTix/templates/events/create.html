@@ -1,0 +1,12 @@
+{%- extends "base.html" -%}
+{% from 'bootstrap5/form.html' import render_form %}
+{block content %}
+    <main class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h1>Create Event</h1>
+                {{ render_form(form) }}
+            </div>
+        </div>
+    </main>
+{% endblock %}
