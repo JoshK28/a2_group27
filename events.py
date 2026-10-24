@@ -6,13 +6,16 @@ from .forms import EventForm
 
 event_bp = Blueprint('event', __name__, url_prefix='/events')
 
+
+@event_bp.route('/create', methods=['GET', 'POST'])
+@login_required
 def create():
     form = EventForm()
     if form.validate_on_submit():
         event = Event(
             title=form.title.data,
             description=form.description.data,
-            image=form.image.data,
+            image='/static/images/default_event_image.jpg',  # Default image path
             start=form.start.data,
             end=form.end.data,
             location=form.location.data,
