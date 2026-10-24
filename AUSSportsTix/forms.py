@@ -42,12 +42,14 @@ class EventForm(FlaskForm):
     ticket_capacity = IntegerField("Ticket Capacity", validators=[InputRequired(), NumberRange(min=1, max=100000)])
     aoc_mode = SelectField("AOC Mode", choices=[(mode, mode.title()) for mode in AOC_MODE], validators=[InputRequired()])
     aoc_text = TextAreaField("AOC Text")
-    
+
     # Create Event submit button
     submit = SubmitField("Create Event")
 
-    def validate_time(self, field):
+    def validate_start(self, field):
         if field.data and field.data < datetime.now():
             raise ValidationError("The event cannot be in the past.")
+
+    def validate_end(self, field):
         if field.data and self.start.data and field.data < self.start.data:
             raise ValidationError("The end time cannot be before the start time.")
