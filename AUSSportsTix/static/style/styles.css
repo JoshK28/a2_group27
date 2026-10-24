@@ -109,3 +109,17 @@ h3 {
   padding: 12px 0;
   border-bottom: 1px solid var(--line);
 }
+/* Event details page */
+.event-image {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+}
+
+.event-description {
+  white-space: pre-line;
+}
+
+.event-info{
+  top: 1rem;
+}
