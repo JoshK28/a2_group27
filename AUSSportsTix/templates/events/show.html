@@ -58,6 +58,25 @@
                 <p class="mb-0">{{event.aoc_text}}</p>
             </section>
             {% endif %}
+
+            <section>
+                <h2 class="h4"><i class="bi bi-chat-dots me-2"></i> Comments({{ event.comments|length }})</h2>
+
+                <!-- Comments will be displayed here, sorted by timestamp-->
+                {% for comment in event.comments | sort(attribute='timestamp', reverse=True) %}
+                <div class="border-bottom py-3">
+                    <div class="mb-1">
+                        <p class="mb-0">
+                            <strong>{{ comment.user.first_name }} {{ comment.user.surname }}</strong> 
+                            <small class="text-muted">{{ comment.timestamp.strftime('%A %d %B %Y, %I:%M %p') }}</small>
+                        </p>
+                        <p class="card-text">{{ comment.content }}</p>
+                    </div>
+                </div>
+                {% else %}
+                    <p class="text-muted">No comments yet.</p>
+                {% endfor %}
+            </section>
         </div>
     </div>
 
