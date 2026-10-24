@@ -62,7 +62,8 @@ def update(id):
         return redirect(url_for('main.index'))  # Redirect to a safe page
 
     form = EventForm(obj=event)
-
+    
+    form.submit.label.text = "Update Event"
     form.image.data = request.files.get('image')  # Get the uploaded file from the request
     booked = event.ticket_capacity - event.tickets_remaining
     if form.validate_on_submit():
@@ -87,7 +88,7 @@ def update(id):
                 db.session.commit()
                 flash('Event updated successfully!', 'success')
                 return redirect(url_for('event.update', id=event.id))  # Redirect to the same page or another page as needed
-    return render_template('events/create.html', form=form, event=event)
+    return render_template('events/create.html', form=form, event=event, cancel_form=CancelEventForm())
 
 
 @event_bp.route('/<int:id>/cancel', methods=['POST'])
