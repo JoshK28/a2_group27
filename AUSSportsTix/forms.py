@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms.fields import TextAreaField, SubmitField, StringField, PasswordField
+from wtforms.fields import TextAreaField, SubmitField, StringField, PasswordField,SelectField, DateTimeLocalField, IntegerField, FloatField
 from wtforms.validators import InputRequired, Length, Email, EqualTo
+from .models import SPORT, GENDER, STATUS, AOC_MODE
 
 # creates the login information
 class LoginForm(FlaskForm):
@@ -8,6 +9,7 @@ class LoginForm(FlaskForm):
     password=PasswordField("Password", validators=[InputRequired('Enter user password'), Length(min=6, max=50)])
     # Login submit button
     submit = SubmitField("Login")
+
 
  # this is the registration form
 class RegisterForm(FlaskForm):
@@ -23,3 +25,20 @@ class RegisterForm(FlaskForm):
 
     # Registration submit button
     submit = SubmitField("Register")
+
+    #Creates the form for creating an event
+class EventForm(FlaskForm):
+    title = StringField("Event Title", validators=[InputRequired()])
+    description = TextAreaField("Event Description", validators=[InputRequired()])
+    image = StringField("Event Image URL", validators=[InputRequired()])
+    start = DateTimeLocalField("Start Time", format='%Y-%m-%dT%H:%M', validators=[InputRequired()])
+    end = DateTimeLocalField("End Time", format='%Y-%m-%dT%H:%M', validators=[InputRequired()])
+    location = StringField("Event Location", validators=[InputRequired()])
+    city = StringField("City", validators=[InputRequired()])
+    sport = SelectField("Sport", choices=[(sport, sport) for sport in SPORT], validators=[InputRequired()])
+    gender = SelectField("Gender", choices=[(gender, gender) for gender in GENDER], validators=[InputRequired()])
+    ticket_price = FloatField("Ticket Price", validators=[InputRequired()])
+    ticket_capacity = IntegerField("Ticket Capacity", validators=[InputRequired()])
+    tickets_remaining = IntegerField("Tickets Remaining", validators=[InputRequired()])
+    aoc_mode = SelectField("AOC Mode", choices=[(mode, mode.title()) for mode in AOC_MODE], validators=[InputRequired()])
+    aoc_text = TextAreaField("AOC Text")
