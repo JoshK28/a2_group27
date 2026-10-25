@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<main class="container my-4">
+    <header class="mb-4">
+        <h1>My Bookings</h1>
+        <p class="text-muted">Tickets booked by {{ current_user.first_name }} {{ current_user.surname }}</p>
+    </header>
+
+    {% for order in orders %}
+    <article class="card mb-4 shadow-sm">
+        <div class="row g-0">
+            <div class="col-md-3">
+                <img src="{{order.event.image}}" class="history-image rounded-start" alt="{{order.event.title}}">
+            </div>
+            <div class="col-md-9">
+                <div class="card-body">
+                    <span class="badge text-bg-{{ badge[order.event.status]}}">{{order.event.status}}</span>
+                    <h2 class="card-title"><a href="{{url_for('event.show', id=order.event.id)}}"> {{order.event.title}}</a></h2>
+                    <ul class ="list-unstyled">
+                        <li><i></i><strong>Order #{{ order.id }}</strong></li>
+                        <li><i></i>{{order.event.start.strftime('%A %d %B %Y, %I:%M %p')}}</li>
+                        <li><i></i>{{order.event.location}}, {{order.event.city}}</li>
+                        <li><strong>Tickets: </strong> ${{'%.2f' % order.price}} x {{order.ticket_quantity}} = ${{'%.2f' % (order.price * order.ticket_quantity)}}</li>
+                        <li>Booked on {{order.book_time.strftime('%d %B %Y, %I:%M %p')}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    {% else %}
+    <div class="text-center py-5">
+        <p class="lead">You have not booked any tickets yet.</p>
+        <a class="btn btn-primary" href="{{ url_for('main.index') }}">Browse Events</a>
+    </div>
+    {% endfor %}
+
+</main>
+{% endblock %}

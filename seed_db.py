@@ -225,10 +225,31 @@ def populate_database_with_sample_data():
 
     orders = [
         {
-            "user_id": 1, 
-            "event_id": 1,
-            "quantity": 2,
-            "price": 25.0
+            "user_id": 1, "event_id": 1, "quantity": 2, "price": 35.0
+        },
+        {
+            "user_id": 2,  "event_id": 1, "quantity": 4, "price": 35.0
+        },
+        {
+            "user_id": 3,  "event_id": 2, "quantity": 3, "price": 30.0
+        },
+        {
+            "user_id": 4, "event_id": 3, "quantity": 1, "price": 20.0
+        },
+        {
+            "user_id": 5,  "event_id": 4,  "quantity": 2, "price": 45.0
+        },
+        {
+            "user_id": 1, "event_id": 5,  "quantity": 5, "price": 40.0
+        },
+        {
+            "user_id": 2,  "event_id": 6, "quantity": 2, "price": 15.0
+        },
+        {
+            "user_id": 3, "event_id": 7, "quantity": 3, "price": 12.0
+        },
+        {
+            "user_id": 4, "event_id": 8, "quantity": 1, "price": 25.0
         }
     ]
 
