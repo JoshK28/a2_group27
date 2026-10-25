@@ -1,4 +1,4 @@
-/* ClimbProEvents custom styles (Bootstrap handles the rest) */
+/* AUS Sports Tix custom styles (Bootstrap handles the rest) */
 
 @import url("https://fonts.googleapis.com/css2?family=Archivo:wght@800&family=Inter:wght@400;600&display=swap");
 
@@ -24,13 +24,13 @@ h3 {
 }
 
 /* Navbar */
-.navbar-cpe {
+.navbar-brand-dark {
   background: var(--granite);
 }
-.navbar-cpe .nav-link {
+.navbar-brand-dark .nav-link {
   color: #d6d8dc;
 }
-.navbar-cpe .nav-link.active {
+.navbar-brand-dark .nav-link.active {
   color: #fff;
 }
 
@@ -56,21 +56,21 @@ h3 {
 }
 
 /* Buttons */
-.btn-cpe {
+.btn-brand {
   background: var(--orange);
   border: none;
   color: #191d24;
   font-weight: 600;
 }
-.btn-cpe:hover {
+.btn-brand:hover {
   background: var(--orange-dark);
   color: #fff;
 }
-.btn-outline-cpe {
+.btn-outline-brand {
   border: 1px solid var(--line);
   color: var(--granite);
 }
-.btn-outline-cpe:hover {
+.btn-outline-brand:hover {
   background: var(--granite);
   color: #fff;
 }
