@@ -3,7 +3,7 @@
 
 
 {% block header %}
-<!-- Hero Banner with site name and description -->
+<!-- Hero banner with site name/description -->
 <section class="hero py-5">
     <div class="container">
         <h1> AUSSportsTix </h1>
@@ -27,6 +27,7 @@
             <input class="form-control" type="text" name="search" placeholder="Search by event name" value="{{ search }}">
         </div>
 
+        <!-- dropdowns -->
         <div class="col-md-2">
             <select class="form-select" name="sport">
                 <option value=""> All sports </option>
@@ -45,11 +46,20 @@
             </select>
         </div>
 
-
+        <!-- button -->
         <div class="col-md-3">
             <button class="btn btn-primary" type="submit"> Search </button>
+            <a class="btn btn-outline-secondary" href="{{ url_for('main.index') }}"> Clear </a>
         </div>
      </form>
+
+     <!-- user reminder for search -->
+     {% if search or sport or status %}
+     <p class="text-muted">
+        Showing {{ events|length }} event(s){% if search %} matching "{{ search }}" 
+        {% endif %}{% if sport %} in {{ sport }}{% endif %}{% if status%} that are {{ status }}{% endif %}
+     </p>
+     {% endif %}
 
     <ul>
         <!-- Event cards scaling with screen width -->
@@ -80,9 +90,12 @@
 
             {% else %}
 
-            <div>
+            
+            <div class="w-100"></div>
 
-                <div class="alert alert-info"> No events yet. </div>
+                <div class="alert alert-info"> 
+                    No events matched your search. <a href="{{ url_for('main.index') }}"> Show all events </a>
+                </div>
            
             </div>
 
