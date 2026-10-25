@@ -50,7 +50,7 @@ def populate_database_with_sample_data():
         {
             "title": "A-League Men: Melbourne Derby",
             "description": "Melbourne Victory host Melbourne City in the first derby of the season. Gates open 90 minutes prior to kick off.",
-            "image": "event-01.svg",
+            "image": "event-01.webp",
             "start": datetime(2027, 3, 13, 19, 30) ,
             "end": datetime(2027, 3, 13, 21, 30),
             "location": "AAMI Park", 
@@ -68,7 +68,7 @@ def populate_database_with_sample_data():
         {
             "title": "Matildas v New Zealand Friendly",
             "description": "Matildas take on the Ferns in a pre-tournament friendly. Family zone & player signings after the match.",
-            "image": "event-02.svg",
+            "image": "event-02.webp",
             "start": datetime(2027, 4, 10, 18, 0),
             "end": datetime(2027, 4, 10, 20, 0),
             "location": "Suncorp Stadium", 
@@ -86,7 +86,7 @@ def populate_database_with_sample_data():
         {
             "title": "Queensland Bouldering Open",
             "description": "The best boulderers in the state compete over qualification and final rounds on a fresh set of problems.",
-            "image": "event-03.svg",
+            "image": "event-03.jpg",
             "start": datetime(2027, 4, 10, 18, 0),
             "end": datetime(2027, 4, 10, 20, 0),
             "location": "Urban Climb West end", 
@@ -104,7 +104,7 @@ def populate_database_with_sample_data():
         {
             "title": "Adelaide International Tennis Day Session",
             "description": "Day session of the Adelaide International with three singles matches on the centre court.",
-            "image": "event-04.svg",
+            "image": "event-04.jpg",
             "start": datetime(2027, 1, 12, 11, 0),
             "end": datetime(2027, 1, 12, 18, 0),
             "location": "Memorial Drive Tennis Centre", 
@@ -122,7 +122,7 @@ def populate_database_with_sample_data():
         {
             "title": "Super Rugby: Waratahs v Brumbies",
             "description": "A round 3 local derby under lights. The pre-match game entertainment starts at 6pm.",
-            "image": "event-05.svg",
+            "image": "event-05.avif",
             "start": datetime(2027, 3, 6, 19, 35),
             "end": datetime(2027, 3, 6, 21, 30),
             "location": "Allianz Stadium", 
@@ -139,8 +139,8 @@ def populate_database_with_sample_data():
 
         {
             "title": "WBBL: Perth Scorchers v Sydney Sixers",
-            "description": "Women's big baash league T20 match. Cancelled due to ground requiring resurfacing.",
-            "image": "event-06.svg",
+            "description": "Women's big bash league T20 match. Cancelled due to ground requiring resurfacing.",
+            "image": "event-06.jpg",
             "start": datetime(2026, 11, 21, 21, 15, 0),
             "end": datetime(2026, 11, 21, 18, 30),
             "location": "WACA Ground", 
@@ -158,7 +158,7 @@ def populate_database_with_sample_data():
         {
             "title": "Sheffield Shield: QLD v VIC",
             "description": "Day one of the four day first class match between Queelsand and Victoria.",
-            "image": "event-01.svg",
+            "image": "event-07.webp",
             "start": datetime(2027, 2, 4, 10, 30),
             "end": datetime(2027, 2, 4, 17, 30),
             "location": "The Gabba", 
@@ -176,7 +176,7 @@ def populate_database_with_sample_data():
         {
             "title": "Sydney Winter Tennis Classic",
             "description": "The mens single semi-finals and final event at the indoor winter classic.",
-            "image": "event-02.svg",
+            "image": "event-08.jpg",
             "start": datetime(2026, 8, 15, 10, 0),
             "end": datetime(2026, 8, 15, 18, 0),
             "location": "Ken Rosewall Arena", 

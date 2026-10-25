@@ -8,7 +8,7 @@
     <div class="container">
         <h1> AUSSportsTix </h1>
         <p class="lead my-3"> Find and book tickets to a multitude of sport events across Australia! </p>
-        <a class="btn btn-light" href="#events"> Browse events </a>
+        <a class="btn btn-brand" href="#events"> Browse events </a>
     </div>
 </section>
 {% endblock %}
@@ -18,7 +18,7 @@
 <!-- Boostrap colours for each status -->
 {% set badge = {'Open': 'success', 'Sold Out': 'warning', 'Cancelled': 'danger', 'Inactive': 'secondary'} %}
 
-<div class="Container my-5" id="events">
+<div class="container my-5" id="events">
     <h2>Browse Events</h2>
 
     <!-- Search form -->
@@ -61,7 +61,6 @@
      </p>
      {% endif %}
 
-    <ul>
         <!-- Event cards scaling with screen width -->
         <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-4">
             {% for event in events %}
@@ -75,7 +74,7 @@
                     <div>
                         <span class="badge text-bg-{{ badge[event.status] }}"> {{ event.status }} </span>
                         <h5 class="card-title">
-                            <a href="#"> {{ event.title }} </a>
+                            <a href="{{ url_for('event.show', id=event.id) }}"> {{ event.title }} </a>
                         </h5>
 
                         <p class="card-text">
@@ -91,7 +90,7 @@
             {% else %}
 
             
-            <div class="w-100"></div>
+            <div class="w-100">
 
                 <div class="alert alert-info"> 
                     No events matched your search. <a href="{{ url_for('main.index') }}"> Show all events </a>
@@ -101,7 +100,6 @@
 
             {% endfor %}
         </div>
-    </ul>
 </div>
 
 {% endblock %}
