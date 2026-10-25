@@ -109,16 +109,17 @@ h3 {
   padding: 12px 0;
   border-bottom: 1px solid var(--line);
 }
-
-/* Event Cards (Lift) */
-.event-card {
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-.event-card:hover {
-  transform: translate(-2px);
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-}
-.event-card .card-img-top {
-  height: 180px;
+/* Event details page */
+.event-image {
+  width: 100%;
+  max-height: 400px;
   object-fit: cover;
+}
+
+.event-description {
+  white-space: pre-line;
+}
+
+.event-info{
+  top: 1rem;
 }

@@ -2,7 +2,7 @@ from flask import Blueprint, flash, redirect, render_template, request, url_for,
 from flask_login import current_user, login_required
 from . import db
 from .models import Event, Comment, Order, update_inactive_events
-from .forms import CancelEventForm, EventForm
+from .forms import CancelEventForm, EventForm, CommentForm
 import os
 from uuid import uuid4
 from werkzeug.utils import secure_filename
@@ -50,7 +50,7 @@ def create():
             db.session.add(event)
             db.session.commit()
             flash('Event created successfully!', 'success')
-            return redirect(url_for('event.create'))  # Redirect to the same page or another page as needed
+            return redirect(url_for('event.show', id=event.id))
     return render_template('events/create.html', form=form)
 
 # Update event details for event owner only
@@ -101,7 +101,7 @@ def update(id):
                     event.status = 'Sold Out' if event.tickets_remaining == 0 else 'Open'
                 db.session.commit()
                 flash('Event updated successfully!', 'success')
-                return redirect(url_for('event.update', id=event.id))  # Redirect to the same page or another page as needed
+                return redirect(url_for('event.show', id=event.id))
     return render_template('events/create.html', form=form, event=event, cancel_form=CancelEventForm())
 
 
@@ -124,7 +124,43 @@ def cancel(id):
         event.status = 'Cancelled'
         db.session.commit()
         flash('Event cancelled.', 'success')
-        return redirect(url_for('event.update', id=event.id))
+        return redirect(url_for('event.show', id=event.id))
     
     flash('Please confirm cancellation.', 'warning')
     return redirect(url_for('event.update', id=event.id))
+
+
+# Show event details and comments to anyone
+@event_bp.route('/<int:id>')
+def show(id):
+    update_inactive_events()
+
+    event = db.session.scalar(db.select(Event).where(Event.id == id))
+    if event is None:
+        abort(404)
+
+    # Create comment form
+    form = CommentForm()
+    return render_template('events/show.html', event = event, form = form)
+
+
+
+# Post a comment to an event as logged in user
+@event_bp.route('/<int:id>/comment', methods=['GET', 'POST'])
+@login_required
+def comment(id):
+    event = db.session.scalar(db.select(Event).where(Event.id == id))
+    if event is None:
+        abort(404)
+
+    form = CommentForm()
+    if form.validate_on_submit():
+        comment = Comment(content=form.content.data, user=current_user, event=event)
+        db.session.add(comment)
+        db.session.commit()
+        flash('Comment posted successfully!', 'success')
+    elif request.method == 'POST':
+        # Invalid submission. Either empty or exceeds 500 characters. Show error message. 
+        flash('Write comment between 1 and 500 characters before submitting.', 'warning')
+
+    return redirect(url_for('event.show', id=event.id))

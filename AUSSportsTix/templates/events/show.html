@@ -1,0 +1,95 @@
+{%- extends "base.html" -%}
+{% from 'bootstrap5/form.html' import render_form %}
+<!-- Event details page -->
+{%block content %}
+
+
+<main class="container my-4">
+    <a class="d-inline-block mb-3" href="{{ url_for('main.index') }}"><i class="bi bi-arrow-left"></i> Back to Events</a>
+
+
+    <!-- Title: status, sports and gender-->
+     <header class="mb-3">
+        <span class="badge text-bg-{{ badge[event.status]}}">{{event.status}}</span>
+        <span class="badge text-bg-light border"> {{event.sport}} </span>
+        <span class="badge text-bg-light border"> {{event.gender}} </span>
+        <h1 class="mt-2"> {{event.title}}</h1>
+     </header>
+
+    <div class="row g-4">
+        <div class="col-lg-4 order-lg-2">
+            <div class="card shadow-sm sticky-lg-top event-info">
+                <div class="card-body">
+                    <h2 class="card-title">Event Information</h2>
+                    <ul class="list-unstyled">
+                        <li><strong>Start:</strong> {{event.start.strftime ('%A %d %B %Y, %I:%M %p')}}</li>
+                        <li><strong>End:</strong> {{event.end.strftime ('%A %d %B %Y, %I:%M %p')}}</li>
+                        <li><strong>Location:</strong> {{event.location}}, {{event.city}}</li>
+                        <li><strong>Organiser:</strong> {{event.owner.first_name}} {{event.owner.surname}}</li>
+                        <br>
+                        <li><strong>Capacity:</strong> {{event.tickets_remaining}} of {{event.ticket_capacity}}</li>
+                        <li><strong>Price:</strong> ${{ "%.2f"|format(event.ticket_price) }}</li>
+                    </ul>
+                    <!--Booking form -->
+                    {% if event.status == "Open" %}
+                    <p class="text-muted">Booking form</p>
+                    {% else %}
+                    <div class= "alert alert-warning" role="alert">   {{closed[event.status]}}  </div>
+                    {% endif %}
+                    
+                    <!--For authenticated event owner-->
+                    {% if current_user.is_authenticated and current_user.id == event.user_id %}
+                    <hr>
+                    <a class="btn btn-outline-secondary w-100" href="{{url_for('event.update', id=event.id)}}"><i class="bi bi-pencil"></i> Edit or Cancel Event</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8 order-lg-1">
+            <img src="{{event.image}}" class="img-fluid rounded mb-4" alt="{{event.title}}">
+
+            <section class="mb-4">
+                <h2 class="h4"><i class="bi bi-info-circle"></i> Event Details</h2>
+                <p class="event-description">{{event.description}}</p>
+            </section>
+
+            {% if event.aoc_mode != 'none' and event.aoc_text %}
+            <section class="mb-4 p-3 border-start border-4 rounded">
+                <h2 class="h5">Acknowledgements of Country</h2>
+                <p class="mb-0">{{event.aoc_text}}</p>
+            </section>
+            {% endif %}
+
+            <section>
+                <h2 class="h4"><i class="bi bi-chat-dots me-2"></i> Comments({{ event.comments|length }})</h2>
+
+                <!-- Comments will be displayed here, sorted by timestamp-->
+                {% for comment in event.comments | sort(attribute='timestamp', reverse=True) %}
+                <div class="border-bottom py-3">
+                    <div class="mb-1">
+                        <p class="mb-0">
+                            <strong>{{ comment.user.first_name }} {{ comment.user.surname }}</strong> 
+                            <small class="text-muted">{{ comment.timestamp.strftime('%A %d %B %Y, %I:%M %p') }}</small>
+                        </p>
+                        <p class="card-text">{{ comment.content }}</p>
+                    </div>
+                </div>
+                {% else %}
+                    <p class="text-muted">No comments yet.</p>
+                {% endfor %}
+
+
+                <!-- Comment form sends logged-out users to login page -->
+                 <div class="mt-4">
+                    {% if not current_user.is_authenticated %}
+                    <p class="text-muted">Please <a href="{{ url_for('auth.login') }}">log in</a> to post a comment.</p>
+                    {% endif %}
+                    {{render_form(form, action=url_for('event.comment', id=event.id))}}
+                 </div>
+
+            </section>
+        </div>
+    </div>
+
+</main>
+{% endblock %}

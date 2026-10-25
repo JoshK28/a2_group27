@@ -61,3 +61,8 @@ class CancelEventForm(FlaskForm):
     confirm = BooleanField("Are you sure you want to cancel this event?", validators=[InputRequired()])
     cancel = SubmitField("Cancel Event")
 
+
+class CommentForm(FlaskForm):
+    content = TextAreaField("Comment", validators=[InputRequired('Write a comment...'), Length(min=1, max=500,message ='500 characters max')])
+    submit = SubmitField("Post Comment")
+
