@@ -41,6 +41,13 @@ def index():
                         continue
                     event_embedding = np.array(json.loads(event.description_embedding))
                     similarity = np.dot(query_embedding, event_embedding) / (np.linalg.norm(query_embedding) * np.linalg.norm(event_embedding))
+
+                    #Uncomment to show similarity score.
+                    #print(
+                    #    f'Search: {search!r} | Event {event.id}: '
+                    #    f'{event.title} | Score: {similarity:.4f}', 
+                    #    flush = True)
+
                     if similarity >= SEMANTIC_CUTOFF:
                         results.append((event, similarity))
 
