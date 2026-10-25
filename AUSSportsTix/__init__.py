@@ -67,5 +67,11 @@ def create_app():
     def internal_error(e):
         db.session.rollback()
         return render_template('500.html'),500
+
+
+    #Testing purposes for error 500. Comment out if preffered
+    @app.route('/test500')
+    def test500():
+        raise RuntimeError('Temporary 500 test')
     
     return app
