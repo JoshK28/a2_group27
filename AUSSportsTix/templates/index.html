@@ -79,8 +79,8 @@
                         </h3>
 
                         <!-- Display event details such as time,city, sport and gender.-->
-                        <ul >
-                            <li><i class="bi bi-calender-event me-1"></i>{{ event.start.strftime('%d %b %Y') }}</li>
+                        <ul class="list-unstyled small text-muted mb-3">
+                            <li><i class="bi bi-calendar-event me-1"></i>{{ event.start.strftime('%d %b %Y') }}</li>
                             <li><i class="bi bi-geo-alt me-1"></i>{{ event.location }} , {{ event.city }}</li>
                             <li><i class="bi bi-trophy me-1"></i>{{ event.sport }} , {{ event.gender }}</li>
                         </ul>
