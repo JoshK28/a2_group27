@@ -27,7 +27,7 @@ def populate_database_with_sample_data():
             "title": "A-League Men: Melbourne Derby",
             "description": "Melbourne Victory host Melbourne City in the first derby of the season. Gates open 90 minutes prior to kick off.",
             "image": "event-01.svg",
-            "start": datetime(2027, 3, 3, 19, 30) ,
+            "start": datetime(2027, 3, 13, 19, 30) ,
             "end": datetime(2027, 3, 13, 21, 30),
             "location": "AAMI Park", 
             "city": "Melbourne",
@@ -42,7 +42,7 @@ def populate_database_with_sample_data():
         },
 
         {
-            "title": "Matilas v New Zealand Friendly",
+            "title": "Matildas v New Zealand Friendly",
             "description": "Matildas take on the Ferns in a pre-tournament friendly. Family zone & player signings after the match.",
             "image": "event-02.svg",
             "start": datetime(2027, 4, 10, 18, 0),

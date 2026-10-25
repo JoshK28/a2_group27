@@ -5,7 +5,7 @@
 {% block header %}
 <!-- Hero Banner with site name and description -->
 <section class="hero py-5">
-    <div class="Container">
+    <div class="container">
         <h1> AUSSportsTix </h1>
         <p class="lead my-3"> Find and book tickets to a multitude of sport events across Australia! </p>
         <a class="btn btn-light" href="#events"> Browse events </a>
@@ -27,8 +27,27 @@
             <input class="form-control" type="text" name="search" placeholder="Search by event name" value="{{ search }}">
         </div>
 
+        <div class="col-md-2">
+            <select class="form-select" name="sport">
+                <option value=""> All sports </option>
+                {% for s in sports %}
+                <option value="{{ s }}" {% if s == sport %} selected {% endif %}> {{ s }} </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-md-2">
+            <select class="form-select" name="status">
+                <option value=""> All statuses </option>
+                {% for s in statuses %}
+                <option value="{{ s }}" {% if s == status %}selected{% endif %}> {{ s }} </option>
+                {% endfor %}
+            </select>
+        </div>
+
+
         <div class="col-md-3">
-            <button class="btn btn-priamry" type="submit"> Search </button>
+            <button class="btn btn-primary" type="submit"> Search </button>
         </div>
      </form>
 
@@ -64,7 +83,7 @@
             <div>
 
                 <div class="alert alert-info"> No events yet. </div>
-
+           
             </div>
 
             {% endfor %}
