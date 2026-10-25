@@ -19,7 +19,7 @@ CAPITAL_CITIES = {
 
     'sydney': {
         'city': 'Sydney',
-        'place_name': 'None',
+        'place_name': None,
         'custodians': 'Garidgal people of the Eora Nation',
         'names': ['Cadigal', 'Gadigal'],
         'contested': 'Gadical Country is the city centre. Greater Sydney also covers the Darug, Dharawal, Guringai people.',
@@ -88,7 +88,7 @@ CAPITAL_CITIES = {
 
     'canberra': {
         'city': 'Canberra',
-        'place_name': 'none',
+        'place_name': None,
         'custodians': 'Ngunnawal people and other regions people',
         'names': ['Ngunnawal', 'Ngambri', 'Ngarigo'],
         'contested': 'ACT Government recognised the Ngunnawal people but a dispute from the Ngambri people was made. Recognition of the dispute is important, rather than taking a side.',
