@@ -62,10 +62,13 @@
                 <p class="event-description">{{event.description}}</p>
             </section>
 
+
+            <!-- Acknowledgement of country by creator -->
             {% if event.aoc_mode != 'none' and event.aoc_text %}
-            <section class="mb-4 p-3 border-start border-4 rounded">
-                <h2 class="h5">Acknowledgements of Country</h2>
-                <p class="mb-0">{{event.aoc_text}}</p>
+            <section class="mb-4 p-3 aoc-statement">
+                <h2 class="h5"> Acknowledgements of Country </h2>
+                <p> {{ event.aoc_text }} </p>
+                <a class="small" href="{{ url-for('main.acknowledgement, city=event.city') }}#lookup"> Whose Country is {{ event.city }} on? </a>
             </section>
             {% endif %}
 

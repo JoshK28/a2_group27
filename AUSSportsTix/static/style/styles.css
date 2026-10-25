@@ -131,3 +131,14 @@ h3 {
   max-height: 200px;
   object-fit: cover;
 }
+
+/* Acknowledgement of Country */
+.aoc-statement {
+  border-left: 4px solid #a0522d;
+  background: #fbf6f1;
+  border-radius: 0.375rem;
+}
+
+.aoc-card {
+  border-top: 4px solid #a0522d;
+}
