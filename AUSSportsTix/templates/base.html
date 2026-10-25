@@ -33,6 +33,10 @@
                             href="{{url_for('main.index')}}">Browse Events</a>
                         </li>
 
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.endpoint == 'main.acknowledgement' %}active{% endif %}" href="{{ url_for('main.acknowledgement') }}"> Acknowledgement of Country </a>
+                        </li>
+
                         {% if current_user.is_authenticated %}
                         <!-- My Bookings -->
                         <li class="nav-item">
