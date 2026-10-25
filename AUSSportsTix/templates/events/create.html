@@ -8,7 +8,7 @@
                 {% if event %}
                     <p> Status: <strong>{{ event.status }}</strong>
                     Tickets booked: {{ event.ticket_capacity - event.tickets_remaining }}</p>
-                    <img src="{{ url_for('static', filename=event.image) }}" alt="Event Image" class="img-fluid mb-3">
+                    <img src="{{ event.image }}" alt="Event Image" class="img-fluid rounded mb-3">
                 {% endif %}
                 {% if event and event.status == 'Cancelled' %}
                     <p>This event has been cancelled and can no longer be edited</p>  

@@ -109,6 +109,30 @@ h3 {
   padding: 12px 0;
   border-bottom: 1px solid var(--line);
 }
+/* Event cards on landing page */
+.event-card {
+  border-color:var(--line);
+  box-shadow: 0 0.125rem 0.25rem #23272f14;
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+.event-card:hover,
+.event-card:focus-within {
+  border-color: var(--orange);
+  box-shadow: 0 0.5rem 1rem #23272f2e;
+}
+.event-card-img {
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+.event-card .card-title a {
+  color: var(--granite);
+  text-decoration: none;
+}
+.event-card:hover .card-title a {
+  color: var(--orange-dark);
+}
+
+
 /* Event details page */
 .event-image {
   width: 100%;
@@ -141,4 +165,10 @@ h3 {
 
 .aoc-card {
   border-top: 4px solid #a0522d;
+}
+
+
+/* Error pages */
+.error-code {
+  color: var(--orange);
 }

@@ -48,7 +48,7 @@
 
         <!-- button -->
         <div class="col-md-3">
-            <button class="btn btn-primary" type="submit"> Search </button>
+            <button class="btn btn-brand" type="submit"> Search </button>
             <a class="btn btn-outline-secondary" href="{{ url_for('main.index') }}"> Clear </a>
         </div>
      </form>
@@ -69,20 +69,26 @@
 
                 <div class="card event-card h-100">
 
-                    <img src="{{ event.image }}"> 
+                    <img src="{{ event.image }}" class="card-img-top event event-card-img" alt="{{event.title}}">
 
-                    <div>
-                        <span class="badge text-bg-{{ badge[event.status] }}"> {{ event.status }} </span>
-                        <h5 class="card-title">
-                            <a href="{{ url_for('event.show', id=event.id) }}"> {{ event.title }} </a>
-                        </h5>
+                    <div class="card-body d-flex flex-column">
+                        <span class="badge text-bg-{{ badge[event.status] }} align-self-start mb-2"> {{ event.status }} </span>
 
-                        <p class="card-text">
-                            {{ event.start.strftime('%d %b %Y') }} <br>
-                            {{ event.location }} , {{ event.city }} <br>
-                            {{ event.sport }} , {{ event.gender }} <br>
-                            ${{ '%.2f' % event.ticket_price }} , {{ event.tickets_remaining }} tickets left
-                        </p>
+                        <h3 class="h5 card-title">
+                            <a class="stretched-link" href="{{ url_for('event.show', id=event.id) }}"> {{ event.title }} </a>
+                        </h3>
+
+                        <!-- Display event details such as time,city, sport and gender.-->
+                        <ul >
+                            <li><i class="bi bi-calender-event me-1"></i>{{ event.start.strftime('%d %b %Y') }}</li>
+                            <li><i class="bi bi-geo-alt me-1"></i>{{ event.location }} , {{ event.city }}</li>
+                            <li><i class="bi bi-trophy me-1"></i>{{ event.sport }} , {{ event.gender }}</li>
+                        </ul>
+                        <!-- Price and availability of event tickets-->
+                        <div class="d-flex justify-content-between mt-auto fw-semibold">
+                            <span>${{ '%.2f' % event.ticket_price }}</span>
+                            <span>{{ event.tickets_remaining }}  tickets left</span>
+                        </div>
                     </div>
                 </div>
             </div>
