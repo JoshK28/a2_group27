@@ -5,6 +5,16 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 import os
 
+# local AI search for loading models
+encoder = None
+if os.getenv('AI_SEARCH_ENABLED', '1') == '1':
+      from sentence_transformers import SentenceTransformer
+
+      try:
+          encoder = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2', local_files_only=True)
+      except Exception:
+          encoder = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
+
 db = SQLAlchemy()
 
 # create a function that creates a web application

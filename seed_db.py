@@ -1,4 +1,5 @@
-from AUSSportsTix import db, create_app
+import json
+from AUSSportsTix import db, create_app, encoder
 from AUSSportsTix.models import User, Event, Comment, Order
 from flask_bcrypt import generate_password_hash
 from datetime import datetime
@@ -49,7 +50,7 @@ def populate_database_with_sample_data():
     events = [
         {
             "title": "A-League Men: Melbourne Derby",
-            "description": "Melbourne Victory host Melbourne City in the first derby of the season. Gates open 90 minutes prior to kick off.",
+            "description": "Melbourne Victory host Melbourne City in a soccer rivalry at AAMI Park. Watch quick passing, attacking runs and attempts on goal as supporters cheer from the stands. This evening fixture offers a lively stadium atmosphere for spectators. Gates open ninety minutes before kick off.",
             "image": "event-01.webp",
             "start": datetime(2027, 3, 13, 19, 30) ,
             "end": datetime(2027, 3, 13, 21, 30),
@@ -67,8 +68,7 @@ def populate_database_with_sample_data():
 
         {
             "title": "Matildas v New Zealand Friendly",
-            "description": "Matildas take on the Ferns in a pre-tournament friendly. Family zone & player signings after the match.",
-            "image": "event-02.webp",
+            "description": "The Matildas meet New Zealand in an international women's soccer friendly. Supporters can watch skilled passing, tackles and shots on goal from the stands. A family zone and player signings give children a welcoming introduction to the national team. This fixture is sold out.",            "image": "event-02.webp",
             "start": datetime(2027, 4, 10, 18, 0),
             "end": datetime(2027, 4, 10, 20, 0),
             "location": "Suncorp Stadium", 
@@ -85,8 +85,7 @@ def populate_database_with_sample_data():
 
         {
             "title": "Queensland Bouldering Open",
-            "description": "The best boulderers in the state compete over qualification and final rounds on a fresh set of problems.",
-            "image": "event-03.jpg",
+            "description": "Queensland's leading female climbers compete on short indoor walls without ropes. Athletes use strength, balance and precise movement to solve challenging routes above padded flooring. Spectators can follow qualification rounds and the final from the viewing area as competitors attempt each problem.",            "image": "event-03.jpg",
             "start": datetime(2027, 4, 10, 18, 0),
             "end": datetime(2027, 4, 10, 20, 0),
             "location": "Urban Climb West end", 
@@ -103,8 +102,7 @@ def populate_database_with_sample_data():
 
         {
             "title": "Adelaide International Tennis Day Session",
-            "description": "Day session of the Adelaide International with three singles matches on the centre court.",
-            "image": "event-04.jpg",
+            "description": "Watch three women's singles tennis matches during the Adelaide International day session. Players trade powerful serves, long rallies and precise baseline shots on centre court. Spectators can follow every point from the stands during an afternoon of competitive play.",            "image": "event-04.jpg",
             "start": datetime(2027, 1, 12, 11, 0),
             "end": datetime(2027, 1, 12, 18, 0),
             "location": "Memorial Drive Tennis Centre", 
@@ -121,8 +119,7 @@ def populate_database_with_sample_data():
 
         {
             "title": "Super Rugby: Waratahs v Brumbies",
-            "description": "A round 3 local derby under lights. The pre-match game entertainment starts at 6pm.",
-            "image": "event-05.avif",
+            "description": "The Waratahs face the Brumbies in a Super Rugby derby under stadium lights. Spectators can watch scrums, strong tackles, passing moves and tries as the teams compete for possession. Pre-match entertainment builds the atmosphere before the evening contest begins.",            "image": "event-05.avif",
             "start": datetime(2027, 3, 6, 19, 35),
             "end": datetime(2027, 3, 6, 21, 30),
             "location": "Allianz Stadium", 
@@ -139,8 +136,7 @@ def populate_database_with_sample_data():
 
         {
             "title": "WBBL: Perth Scorchers v Sydney Sixers",
-            "description": "Women's big bash league T20 match. Cancelled due to ground requiring resurfacing.",
-            "image": "event-06.jpg",
+            "description": "The Perth Scorchers were scheduled to face the Sydney Sixers in a women's Twenty20 cricket fixture. The format features quick scoring, boundary shots and energetic fielding over short innings. Ground resurfacing has forced cancellation, so this listing is for information and tickets cannot be booked.",            "image": "event-06.jpg",
             "start": datetime(2026, 11, 21, 21, 15, 0),
             "end": datetime(2026, 11, 21, 18, 30),
             "location": "WACA Ground", 
@@ -157,8 +153,7 @@ def populate_database_with_sample_data():
 
         {
             "title": "Sheffield Shield: QLD v VIC",
-            "description": "Day one of the four day first class match between Queelsand and Victoria.",
-            "image": "event-07.webp",
+            "description": "Queensland face Victoria on the opening day of a four-day first-class cricket match. Watch patient innings, fast bowling, spin and close catching as the teams build their positions over several sessions. Spectators can settle into a relaxed day at the ground and follow the changing contest between bat and ball.",            "image": "event-07.webp",
             "start": datetime(2027, 2, 4, 10, 30),
             "end": datetime(2027, 2, 4, 17, 30),
             "location": "The Gabba", 
@@ -175,8 +170,7 @@ def populate_database_with_sample_data():
 
         {
             "title": "Sydney Winter Tennis Classic",
-            "description": "The mens single semi-finals and final event at the indoor winter classic.",
-            "image": "event-08.jpg",
+            "description": "The men's singles semi-finals and final took place indoors at the Sydney Winter Tennis Classic. Spectators watched serves, rallies and tie-breaks as the remaining players competed for the title. This past event remains listed for information and booking history, with ticket sales closed.",            "image": "event-08.jpg",
             "start": datetime(2026, 8, 15, 10, 0),
             "end": datetime(2026, 8, 15, 18, 0),
             "location": "Ken Rosewall Arena", 
@@ -192,8 +186,7 @@ def populate_database_with_sample_data():
         },
         {
             "title": "FIFA World Cup 2026: Australia v France",
-            "description": "The Socceroos take on the French in the group stage of the FIFA World Cup 2026. Gates open 90 minutes prior to kick off.",
-            "image": "fifa_img.png",
+            "description": "The Socceroos face France in a men's international soccer group-stage fixture. Watch the national teams compete through controlled passing, defensive challenges and shots on goal. Travelling supporters can enjoy a major stadium occasion and cheer their side from the stands. Gates open ninety minutes before kick off.",            "image": "fifa_img.png",
             "start": datetime(2026, 12, 15, 19, 0),
             "end": datetime(2026, 12, 15, 21, 0),
             "location": "MetLife Stadium",
@@ -295,10 +288,15 @@ def populate_database_with_sample_data():
 
     if Event.query.count() == 0:
         for event in events:
+            embedding_text = None
+            if encoder is not None:
+                embedding_text = json.dumps(encoder.encode(event["description"]).tolist())
             db.session.add(
+            
                 Event(
                     title=event["title"],
                     description=event["description"],
+                    description_embedding=embedding_text,
                     image=image_path + event["image"],
                     start=event["start"],
                     end=event["end"],
