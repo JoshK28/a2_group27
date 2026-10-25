@@ -101,6 +101,7 @@
             <p> One of the leading sellers and creators for sporting events across australia! </p>
             <p class="mb-0 d-flex flex-wrap gap-3">
                 <a href="{{ url_for('main.index') }}"> Browse events </a>
+
                 {% if current_user.is_authenticated %}
                 <a href="{{ url_for('event.create') }}"> Create an event</a>
                 {% endif %}

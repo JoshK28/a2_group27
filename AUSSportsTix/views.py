@@ -5,6 +5,7 @@ import json
 import numpy as np
 from .models import Event, Order, SPORT, STATUS, update_inactive_events
 from . import db, encoder
+from .aoc import CAPITAL_CITIES, find_country
 
 main_bp = Blueprint('main', __name__)
 SEMANTIC_CUTOFF = 0.39 # Lowest similarity for AI-search (reduce for increasing search scope)
@@ -61,6 +62,10 @@ def index():
 
     return render_template('index.html', events=events, search=search, sport=sport, status=status, sports=SPORT, statuses=STATUS)
 
+# Acknowledgement of country, with a Country lookup
+@main_bp.route('/acknowledgement')
+def acknowledgement():
+    return render_template('acknowledgement.html', cities=CAPITAL_CITIES.values())
 
 #Show the logged in user bookings ordered by date
 @main_bp.route('/history')
