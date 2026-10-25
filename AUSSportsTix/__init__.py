@@ -1,5 +1,5 @@
 # import flask - from 'package' import 'Class'
-from flask import Flask 
+from flask import Flask, render_template
 from flask_bootstrap import Bootstrap5
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
@@ -56,5 +56,16 @@ def create_app():
 
     from . import events
     app.register_blueprint(events.event_bp)
+
+    # Show 404 error page when event can't be found.
+    @app.errorhandler(404)
+    def not_found(e):
+        return render_template('404.html'), 404
+
+    # Show 500 error page when something breaks on server
+    @app.errorhandler(500)
+    def internal_error(e):
+        db.session.rollback()
+        return render_template('500.html'),500
     
     return app
