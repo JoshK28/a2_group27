@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request
 from flask_login import current_user, login_required
 from .models import Event, Order, SPORT, STATUS, update_inactive_events
+from .aoc import CAPITAL_CITIES, find_country
 from . import db
 
 main_bp = Blueprint('main', __name__)
@@ -28,6 +29,10 @@ def index():
 
     return render_template('index.html', events=events, search=search, sport=sport, status=status, sports=SPORT, statuses=STATUS)
 
+# Acknowledgement of country, with a Country lookup
+@main_bp.route('/acknowledgement')
+def acknowledgement():
+    return render_template('acknowledgement.html', cities=CAPITAL_CITIES.values())
 
 #Show the logged in user bookings ordered by date
 @main_bp.route('/history')
