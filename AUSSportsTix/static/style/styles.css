@@ -131,3 +131,8 @@ h3 {
   max-height: 200px;
   object-fit: cover;
 }
+
+/* Error pages */
+.error-code {
+  color: var(--orange);
+}

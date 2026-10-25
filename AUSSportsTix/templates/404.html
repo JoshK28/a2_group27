@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Page not found -->
+<div class="container my-5 text-center">
+    <p class="display-1 fw-bold error-code">404</p>
+    <h1> Sorry, we can't find that page</h1>
+    <p class="text-muted my-3">The event or page you're looking for may have been removed, or the link may be wrong. </p>
+
+    <!-- Search form, sends the search to the landing page -->
+     <form class="row g-2 justify-content-center my-4" method="get" action="{{url_for('main.index')}}">
+        <div class="col-sm-8 col-md-5">
+            <input class="form-control" type="text" name="search"
+            placeholder="Search events" aria-label="Search events">
+        </div>
+        <div class="col-sm-auto">
+            <button class="btn btn-brand" type="submit">Search</button>
+        </div>
+    </form>
+
+    <a class="btn btn-dark" href="{{ url_for('main.index')}}">Browse all events</a>
+</div>
+{% endblock %}
