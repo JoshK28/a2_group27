@@ -57,12 +57,19 @@ class EventForm(FlaskForm):
         if field.data and self.start.data and field.data <= self.start.data:
             raise ValidationError("The end time cannot be before the start time.")
 
+# Creates the form for cancelling an event. Tick box must be active to cancel
 class CancelEventForm(FlaskForm):
     confirm = BooleanField("Are you sure you want to cancel this event?", validators=[InputRequired()])
     cancel = SubmitField("Cancel Event")
 
-
+# Creates the form for posting a comment
 class CommentForm(FlaskForm):
     content = TextAreaField("Comment", validators=[InputRequired('Write a comment...'), Length(min=1, max=500,message ='500 characters max')])
     submit = SubmitField("Post Comment")
 
+# Creates the form for booking tickets.
+class BookingForm(FlaskForm):
+    quantity = IntegerField("Quantity of Tickets", default = 1, description="Enter upto 10 tickets per order.",
+                             validators=[InputRequired("Enter how many tickets you want to book."),
+                                        NumberRange(min=1, max=10, message="You can book between 1 and 10 tickets per order.")])
+    submit = SubmitField("Book Tickets")
