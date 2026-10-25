@@ -75,7 +75,7 @@
                     <div>
                         <span class="badge text-bg-{{ badge[event.status] }}"> {{ event.status }} </span>
                         <h5 class="card-title">
-                            <a href="#"> {{ event.title }} </a>
+                            <a href="{{ url_for('event.show', id=event.id) }}"> {{ event.title }} </a>
                         </h5>
 
                         <p class="card-text">
