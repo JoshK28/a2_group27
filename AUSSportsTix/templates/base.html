@@ -20,6 +20,10 @@
             <div class="container-fluid">
                 <ul class="navbar-nav">
 
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'main.acknowledgement' %}active{% endif %}" href=" {{ url_for('main.acknowledgement') }}"> Acknowledgement of Country </a>
+                    </li>
+
                     <!-- Logged in User Greeting-->
                     {% if current_user.is_authenticated %}
                     <li class="nav-item">
@@ -82,6 +86,7 @@
             <p> One of the leading sellers and creators for sporting events across australia! </p>
             <p class="mb-0">
                 <a href="{{ url_for('main.index') }}"> Browse events </a>
+
                 {% if current_user.is_authenticated %}
                 <a href="{{ url_for('event.create') }}"> Create an event</a>
                 {% endif %}
