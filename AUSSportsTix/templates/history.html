@@ -20,7 +20,7 @@
                         <li><i></i><strong>Order #{{ order.id }}</strong></li>
                         <li><i></i>{{order.event.start.strftime('%A %d %B %Y, %I:%M %p')}}</li>
                         <li><i></i>{{order.event.location}}, {{order.event.city}}</li>
-                        <li><strong>Tickets: </strong> ${{'%.2f' % order.price}} x {{order.ticket_quantity}} = ${{'%.2f' % (order.price * order.ticket_quantity)}}</li>
+                        <li><strong>Tickets: </strong> ${{'%.2f' % order.price}} x {{order.quantity}} = ${{'%.2f' % (order.price * order.quantity)}}</li>
                         <li>Booked on {{order.book_time.strftime('%d %B %Y, %I:%M %p')}}</li>
                     </ul>
                 </div>

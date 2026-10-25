@@ -193,7 +193,7 @@ def book(id):
             flash(f'Only {event.tickets_remaining} tickets remaining. Please adjust your booking.', 'warning')
         else:
             # Update and save remaining tickets and user order.
-            order = Order(quantity=quantity, user=current_user, event=event)
+            order = Order(quantity=quantity, price=event.ticket_price, user=current_user, event=event)
             event.tickets_remaining -= quantity
 
             # Update event status if sold out
@@ -201,7 +201,7 @@ def book(id):
                 event.status = 'Sold Out'
             db.session.add(order)
             db.session.commit()
-            flash(f'Successfully booked {quantity} tickets for {event.title}.', 'success')
+            flash(f'Order ID : #{order.id}. Successfully booked {quantity} tickets for {event.title}.', 'success')
             return redirect(url_for('main.history'))
     elif request.method == 'POST':
         flash('Please enter a valid quantity between 1 and 10.', 'warning')

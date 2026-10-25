@@ -34,6 +34,14 @@ def populate_database_with_sample_data():
             "password_hash": generate_password_hash(password),
             "phone_number": "555-123-4567",
             "street_address": "789 Elm St, Brisbane, QLD 4000"
+        },
+        {
+            "first_name": "Steven",
+            "surname": "Johnson",
+            "email": "steven.johnson@example.com",
+            "password_hash": generate_password_hash(password),
+            "phone_number": "555-987-6543",
+            "street_address": "321 Pine Rd, Perth, WA 6000"
         }
     ]
 
@@ -178,6 +186,23 @@ def populate_database_with_sample_data():
             "ticket_price": 25.0,
             "ticket_capacity": 150,
             "tickets_remaining": 40,
+            "status": "Open",
+            "aoc_mode": "none",
+            "user_id": 1
+        },
+        {
+            "title": "FIFA World Cup 2026: Australia v France",
+            "description": "The Socceroos take on the French in the group stage of the FIFA World Cup 2026. Gates open 90 minutes prior to kick off.",
+            "image": "fifa_img.png",
+            "start": datetime(2026, 12, 15, 19, 0),
+            "end": datetime(2026, 12, 15, 21, 0),
+            "location": "MetLife Stadium",
+            "city": "New Jersey",
+            "sport": "Soccer",
+            "gender": "Male",
+            "ticket_price": 40.0,
+            "ticket_capacity": 800,
+            "tickets_remaining": 750,
             "status": "Open",
             "aoc_mode": "none",
             "user_id": 1
