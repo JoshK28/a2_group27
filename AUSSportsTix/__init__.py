@@ -70,8 +70,8 @@ def create_app():
 
 
     #Testing purposes for error 500. Comment out if preffered
-    @app.route('/test500')
-    def test500():
-        raise RuntimeError('Temporary 500 test')
+    #@app.route('/test500')
+    #def test500():
+    #    raise RuntimeError('Temporary 500 test')
     
     return app

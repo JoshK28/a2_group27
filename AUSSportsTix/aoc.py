@@ -20,7 +20,7 @@ CAPITAL_CITIES = {
     'sydney': {
         'city': 'Sydney',
         'place_name': None,
-        'custodians': 'Garidgal people of the Eora Nation',
+        'custodians': 'Gaidgal people of the Eora Nation',
         'names': ['Cadigal', 'Gadigal'],
         'contested': 'Gadical Country is the city centre. Greater Sydney also covers the Darug, Dharawal, Guringai people.',
         'source': 'City of Sydney; Metropolitan Local Aboriginal Land Council',
