@@ -1,6 +1,7 @@
-from flask import Blueprint, flash, redirect, render_template, request, url_for, abort
+import json
+from flask import Blueprint, flash, json, redirect, render_template, request, url_for, abort
 from flask_login import current_user, login_required
-from . import db
+from . import db, encoder
 from .models import Event, Comment, Order, update_inactive_events
 from .forms import CancelEventForm, EventForm, CommentForm, BookingForm
 import os
@@ -27,10 +28,19 @@ def create():
         if not form.image.data:
             form.image.errors.append('Choose an event image.')
         else:
+
+            #Store description embedding if encoder is available
+            embedding_text=None
+            if encoder is not None: 
+                try:
+                    embedding_text = json.dumps(encoder.encode(form.description.data).tolist())
+                except Exception:
+                    flash('AI search is not currently available. Search by keywords only.', 'warning')
             #new events form format with status:Open
             event = Event(
                 title=form.title.data,
                 description=form.description.data,
+                description_embedding=embedding_text,
                 image=check_image(form), 
                 start=form.start.data,
                 end=form.end.data,
@@ -80,13 +90,25 @@ def update(id):
 
     # Validate and update event details
     if form.validate_on_submit():
+            
             if form.ticket_capacity.data < booked:
                 form.ticket_capacity.errors.append(f"Ticket capacity cannot be less than the number of tickets already booked ({booked}).")
             else:
+                # Validate image
                 if form.image.data:
                     event.image=check_image(form)
                 event.title=form.title.data
-                event.description=form.description.data
+
+                # Refresh embedding when description changes.
+                if form.description.data != event.description:
+                    event.description_embedding = None
+                    if encoder is not None:
+                        try:
+                            embedding = encoder.encode(form.description.data)
+                            event.description_embedding = json.dumps(embedding.tolist())
+                        except Exception:
+                            flash('AI search is not currently available. Search by keywords only.', 'warning')
+                event.description= form.description.data
                 event.start=form.start.data
                 event.end=form.end.data
                 event.location=form.location.data
