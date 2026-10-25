@@ -1,18 +1,107 @@
 {% extends 'base.html' %}
 
+
+
+{% block header %}
+<!-- Hero banner with site name/description -->
+<section class="hero py-5">
+    <div class="container">
+        <h1> AUSSportsTix </h1>
+        <p class="lead my-3"> Find and book tickets to a multitude of sport events across Australia! </p>
+        <a class="btn btn-light" href="#events"> Browse events </a>
+    </div>
+</section>
+{% endblock %}
+
 {% block content %}
 
-<div class="Container my-5">
+<!-- Boostrap colours for each status -->
+{% set badge = {'Open': 'success', 'Sold Out': 'warning', 'Cancelled': 'danger', 'Inactive': 'secondary'} %}
+
+<div class="Container my-5" id="events">
     <h2>Browse Events</h2>
 
-    <ul>
-        {% for event in events %}
-        <li> {{ event.title }} ({{ event.status }}) - {{ event.start.strftime('%d %b %Y') }}</li>
-        {% else %}
-        <li> No events yet. </li>
-        {% endfor %}
-    </ul>
+    <!-- Search form -->
+     <form class="row g-2 my-3" method="get" action="{{ url_for('main.index') }}">
+        <div class="col-md-5">
+            <input class="form-control" type="text" name="search" placeholder="Search by event name" value="{{ search }}">
+        </div>
 
+        <!-- dropdowns -->
+        <div class="col-md-2">
+            <select class="form-select" name="sport">
+                <option value=""> All sports </option>
+                {% for s in sports %}
+                <option value="{{ s }}" {% if s == sport %} selected {% endif %}> {{ s }} </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-md-2">
+            <select class="form-select" name="status">
+                <option value=""> All statuses </option>
+                {% for s in statuses %}
+                <option value="{{ s }}" {% if s == status %}selected{% endif %}> {{ s }} </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- button -->
+        <div class="col-md-3">
+            <button class="btn btn-primary" type="submit"> Search </button>
+            <a class="btn btn-outline-secondary" href="{{ url_for('main.index') }}"> Clear </a>
+        </div>
+     </form>
+
+     <!-- user reminder for search -->
+     {% if search or sport or status %}
+     <p class="text-muted">
+        Showing {{ events|length }} event(s){% if search %} matching "{{ search }}" 
+        {% endif %}{% if sport %} in {{ sport }}{% endif %}{% if status%} that are {{ status }}{% endif %}
+     </p>
+     {% endif %}
+
+    <ul>
+        <!-- Event cards scaling with screen width -->
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-4">
+            {% for event in events %}
+
+            <div class="col">
+
+                <div class="card event-card h-100">
+
+                    <img src="{{ event.image }}"> 
+
+                    <div>
+                        <span class="badge text-bg-{{ badge[event.status] }}"> {{ event.status }} </span>
+                        <h5 class="card-title">
+                            <a href="#"> {{ event.title }} </a>
+                        </h5>
+
+                        <p class="card-text">
+                            {{ event.start.strftime('%d %b %Y') }} <br>
+                            {{ event.location }} , {{ event.city }} <br>
+                            {{ event.sport }} , {{ event.gender }} <br>
+                            ${{ '%.2f' % event.ticket_price }} , {{ event.tickets_remaining }} tickets left
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            {% else %}
+
+            
+            <div class="w-100"></div>
+
+                <div class="alert alert-info"> 
+                    No events matched your search. <a href="{{ url_for('main.index') }}"> Show all events </a>
+                </div>
+           
+            </div>
+
+            {% endfor %}
+        </div>
+    </ul>
 </div>
 
 {% endblock %}
