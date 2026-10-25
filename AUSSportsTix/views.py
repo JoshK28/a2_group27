@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request
-from .models import Event, SPORT, STATUS, update_inactive_events
+from flask_login import current_user, login_required
+from .models import Event, Order, SPORT, STATUS, update_inactive_events
 from . import db
 
 main_bp = Blueprint('main', __name__)
@@ -28,8 +29,14 @@ def index():
     return render_template('index.html', events=events, search=search, sport=sport, status=status, sports=SPORT, statuses=STATUS)
 
 
+#Show the logged in user bookings ordered by date
+@main_bp.route('/history')
+@login_required
+def history():
+    # Refresh event statuses to ensure all events are active.
+    update_inactive_events()
 
-   
-
-                              
+    orders = db.session.scalars(db.select(Order).where(Order.user_id == current_user.id)
+                                .order_by(Order.book_time.desc())).all()
+    return render_template('history.html', orders=orders)
 

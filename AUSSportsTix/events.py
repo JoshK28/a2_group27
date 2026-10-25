@@ -2,7 +2,7 @@ from flask import Blueprint, flash, redirect, render_template, request, url_for,
 from flask_login import current_user, login_required
 from . import db
 from .models import Event, Comment, Order, update_inactive_events
-from .forms import CancelEventForm, EventForm, CommentForm
+from .forms import CancelEventForm, EventForm, CommentForm, BookingForm
 import os
 from uuid import uuid4
 from werkzeug.utils import secure_filename
@@ -74,8 +74,11 @@ def update(id):
 
     form.submit.label.text = "Update Event"
     form.image.data = request.files.get('image')  # Get the uploaded file from the request
+
     # Already sold tickets
     booked = event.ticket_capacity - event.tickets_remaining
+
+    # Validate and update event details
     if form.validate_on_submit():
             if form.ticket_capacity.data < booked:
                 form.ticket_capacity.errors.append(f"Ticket capacity cannot be less than the number of tickets already booked ({booked}).")
@@ -139,9 +142,11 @@ def show(id):
     if event is None:
         abort(404)
 
-    # Create comment form
+    # Create comment and booking form
     form = CommentForm()
-    return render_template('events/show.html', event = event, form = form)
+    booking_form = BookingForm()
+
+    return render_template('events/show.html', event = event, form = form, booking_form= booking_form)
 
 
 
@@ -163,4 +168,43 @@ def comment(id):
         # Invalid submission. Either empty or exceeds 500 characters. Show error message. 
         flash('Write comment between 1 and 500 characters before submitting.', 'warning')
 
+    return redirect(url_for('event.show', id=event.id))
+
+
+# Book tickets for an event as logged in user
+@event_bp.route('/<int:id>/book', methods=['GET', 'POST'])
+@login_required
+def book(id):
+
+    update_inactive_events()
+
+    event = db.session.scalar(db.select(Event).where(Event.id == id))
+    if event is None:
+        abort(404)
+
+    form = BookingForm()
+    if event.status != 'Open':
+        flash(f'Tickets cannot be booked for this event. Event status: {event.status}.', 'warning')
+
+    elif form.validate_on_submit():
+        quantity = form.quantity.data
+        # Prevent overbooking.
+        if quantity > event.tickets_remaining:
+            flash(f'Only {event.tickets_remaining} tickets remaining. Please adjust your booking.', 'warning')
+        else:
+            # Update and save remaining tickets and user order.
+            order = Order(quantity=quantity, price=event.ticket_price, user=current_user, event=event)
+            event.tickets_remaining -= quantity
+
+            # Update event status if sold out
+            if event.tickets_remaining == 0:
+                event.status = 'Sold Out'
+            db.session.add(order)
+            db.session.commit()
+            flash(f'Order ID : #{order.id}. Successfully booked {quantity} tickets for {event.title}.', 'success')
+            return redirect(url_for('main.history'))
+    elif request.method == 'POST':
+        flash('Please enter a valid quantity between 1 and 10.', 'warning')
+
+    # Redirect to event page: GET after login or failed booking.
     return redirect(url_for('event.show', id=event.id))

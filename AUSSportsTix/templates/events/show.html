@@ -32,8 +32,17 @@
                     </ul>
                     <!--Booking form -->
                     {% if event.status == "Open" %}
-                    <p class="text-muted">Booking form</p>
+                    <hr>
+                    <h3 class="h5">Book Tickets</h3>
+
+                    {% if not current_user.is_authenticated %}
+                    <p class="text-muted">Please <a href="{{ url_for('auth.login') }}">Log in</a> to book tickets.</p>
+                    {% endif %}
+
+                    {{render_form(booking_form, action=url_for('event.book', id=event.id))}}
+
                     {% else %}
+                    
                     <div class= "alert alert-warning" role="alert">   {{closed[event.status]}}  </div>
                     {% endif %}
                     
