@@ -16,7 +16,7 @@
     <header>
 
         <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary py-2">
             <div class="container-fluid">
                 <button class="navbar-toggler" type="button"
                         data-bs-toggle="collapse" data-bs-target="#mainNav"
@@ -96,10 +96,10 @@
     {% endblock %}
 
     <footer class="site-footer p5-y mt-auto">
-        <div class="container">
-            <p><strong> AUSSiteTix </strong></p>
+        <div class="container py-1">
+            <p class="fs-4 fw-bold"> AUSSportsTix </p>
             <p> One of the leading sellers and creators for sporting events across australia! </p>
-            <p class="mb-0">
+            <p class="mb-0 d-flex flex-wrap gap-3">
                 <a href="{{ url_for('main.index') }}"> Browse events </a>
                 {% if current_user.is_authenticated %}
                 <a href="{{ url_for('event.create') }}"> Create an event</a>

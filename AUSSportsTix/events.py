@@ -1,5 +1,5 @@
 import json
-from flask import Blueprint, flash, json, redirect, render_template, request, url_for, abort
+from flask import Blueprint, flash, redirect, render_template, request, url_for, abort
 from flask_login import current_user, login_required
 from . import db, encoder
 from .models import Event, Comment, Order, update_inactive_events

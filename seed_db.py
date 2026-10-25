@@ -43,6 +43,14 @@ def populate_database_with_sample_data():
             "password_hash": generate_password_hash(password),
             "phone_number": "555-987-6543",
             "street_address": "321 Pine Rd, Perth, WA 6000"
+        },
+        {
+            "first_name": "Jackie",
+            "surname": "Chen",
+            "email": "Jackie.Chen@example.com",
+            "password_hash": generate_password_hash(password),
+            "phone_number": "551-987-6543",
+            "street_address": "35 Grad Rd, Newcastle"
         }
     ]
 
@@ -137,15 +145,15 @@ def populate_database_with_sample_data():
         {
             "title": "WBBL: Perth Scorchers v Sydney Sixers",
             "description": "The Perth Scorchers were scheduled to face the Sydney Sixers in a women's Twenty20 cricket fixture. The format features quick scoring, boundary shots and energetic fielding over short innings. Ground resurfacing has forced cancellation, so this listing is for information and tickets cannot be booked.",            "image": "event-06.jpg",
-            "start": datetime(2026, 11, 21, 21, 15, 0),
-            "end": datetime(2026, 11, 21, 18, 30),
+            "start": datetime(2026, 11, 21, 18, 15, 0),
+            "end": datetime(2026, 11, 21, 21, 30),
             "location": "WACA Ground", 
             "city": "Perth",
             "sport": "Cricket",
             "gender": "Female",
             "ticket_price": 15.0,
             "ticket_capacity": 200,
-            "tickets_remaining": 200,
+            "tickets_remaining": 167,
             "status": "Cancelled",
             "aoc_mode": "none",
             "user_id": 1
